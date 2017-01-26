@@ -1,23 +1,10 @@
-var express = require('express')
-var app = express()
+'use strict';
 
-var ReactServer = require('react-dom/server')
+require('babel-register')
 
-PORT = process.env.PORT || 3000
+var server = require('./server');
 
-var React = require('react'),
-    DOM = React.DOM, div = DOM.div
+var PORT = process.env.PORT || 3000
 
-var HelloWorld = React.createClass({
-  render: () => div(null, 'Hello World'),
-})
-
-var props = {}
-
-app.get('*', (req, res) => {
-  var result = ReactServer.renderToString(React.createElement(HelloWorld, props))
-  res.send(result);
-})
-
-app.listen(PORT, () => 
+server.default.listen(PORT, () => 
   console.log('Listening on port', PORT))
