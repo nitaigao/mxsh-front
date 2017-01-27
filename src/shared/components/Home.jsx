@@ -5,11 +5,8 @@ export default class Home extends Component {
   render() {
     return (
       <div id="home">
-        <h1>Home</h1>
-        <form onSubmit={this.onLogin}>
-          <input type='text' id='email' />
-          <input type='submit' value='sign in' />
-        </form>    
+        <h1>I am a server side rendered React beast</h1>
+        <h2>I am coming for your babies</h2>
       </div>
     );
   }
