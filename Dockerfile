@@ -1,12 +1,21 @@
-FROM node:7.4.0-onbuild
+FROM mhart/alpine-node:7.4.0
 
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+WORKDIR /app
 
-RUN apt-get update && sudo apt-get install yarn
+# install build tools
+RUN apk add --no-cache make gcc g++ python curl bash
+RUN npm install -g yarn@0.17.10 --quiet
 
-ENV NODE_ENV production
+# install deps
+COPY package.json /app/
+COPY yarn.lock /app/
+RUN yarn install
+
+# remove un-used build tools
+RUN apk del make gcc g++ python
+
+# install app
+COPY . /app
 
 EXPOSE 3000
-
-ENTRYPOINT yarn start
+CMD [ "yarn", "start" ]
