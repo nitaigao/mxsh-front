@@ -5,18 +5,36 @@ import { RouterContext, match }  from 'react-router'
 import { renderToString }        from 'react-dom/server'
 
 import express                   from 'express'
+import path                      from 'path'
 import chokidar                  from 'chokidar'
-import webpack                   from 'webpack'
-import webpackConfig             from '../../webpack.config.js'
 
 const app                        = express()
-const compiler                   = webpack(webpackConfig)
 
-app.use(require("webpack-dev-middleware")(compiler, {
-  noInfo: true, publicPath: webpackConfig.output.publicPath
-}))
+const ENVIRONMENT = process.env.NODE_ENV || 'development'
+const DEVELOPMENT = ENVIRONMENT === 'development'
 
-app.use(require("webpack-hot-middleware")(compiler))
+if (DEVELOPMENT) {
+  const webpack       = require('webpack')
+  const webpackConfig = require('../../webpack.config.dev.js')
+  const compiler      = webpack(webpackConfig)
+
+  app.use(require("webpack-dev-middleware")(compiler, {
+    noInfo: true, publicPath: webpackConfig.output.publicPath
+  }))
+  app.use(require("webpack-hot-middleware")(compiler))
+
+  const watcher = chokidar.watch('./src/shared')
+  watcher.on('ready', () => {
+    watcher.on('all', () => {
+      console.log("Clearing /shared/ module cache from server")
+      Object.keys(require.cache).forEach(function(id) {
+        if (/[\/\\]shared[\/\\]/.test(id)) delete require.cache[id]
+      })
+    })
+  })
+} else {
+  app.use(express.static(path.resolve(__dirname, '../../dist')))
+}
 
 app.use((req, res) => {
   const routes = require('../shared/routes').default
@@ -53,16 +71,4 @@ app.use((req, res) => {
     res.end(HTML)
   })
 })
-
-const watcher = chokidar.watch('./src/shared')
-
-watcher.on('ready', () => {
-  watcher.on('all', () => {
-    console.log("Clearing /shared/ module cache from server")
-    Object.keys(require.cache).forEach(function(id) {
-      if (/[\/\\]shared[\/\\]/.test(id)) delete require.cache[id]
-    })
-  })
-})
-
 export default app

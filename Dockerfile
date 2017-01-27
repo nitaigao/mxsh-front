@@ -4,4 +4,4 @@ ENV NODE_ENV production
 
 EXPOSE 3000
 
-ENTRYPOINT npm start
+ENTRYPOINT yarn start

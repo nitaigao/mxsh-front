@@ -16,5 +16,6 @@ export default class Home extends Component {
 
   onLogin = (e) => {
     e.preventDefault()
+    console.log("Logging in!")
   }
 }

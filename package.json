@@ -4,9 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node ./src/server/index.js",
-    "dev": "node ./src/server/index.js & yarn webpack",
-    "webpack": "yarn run webpack-dev-server --progress --color"
+    "start": "if [ \"$NODE_ENV\" = \"production\" ]; then yarn prod; else yarn server; fi",
+    "prod": "yarn webpack && yarn server",
+    "server": "node ./src/server/index.js",
+    "webpack": "node_modules/.bin/webpack --config webpack.config.prod.js"
   },
   "dependencies": {
     "babel-core": "^6.22.1",
