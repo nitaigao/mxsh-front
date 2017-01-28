@@ -8,6 +8,8 @@ import { renderToString }        from 'react-dom/server'
 import configureStore            from '../shared/configureStore'
 
 import express                   from 'express'
+import proxy                     from 'express-http-proxy'
+
 import path                      from 'path'
 import chokidar                  from 'chokidar'
 
@@ -38,6 +40,10 @@ if (DEVELOPMENT) {
 } else {
   app.use(express.static(path.resolve(__dirname, '../../dist')))
 }
+
+const API_HOST = process.env.API_HOST || 'http://api.lvh.me:4000'
+
+app.use('/api', proxy(API_HOST))
 
 app.use((req, res) => {
   const routes = require('../shared/routes').default

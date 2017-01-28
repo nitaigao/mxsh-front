@@ -10,6 +10,7 @@ class Home extends Component {
   render() {
     return (
       <div id="home">
+        <p>Your best email, its the last time you will ever need it</p>
         <LoginForm onLogin={this.onLogin} />
       </div>
     )
