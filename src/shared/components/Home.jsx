@@ -16,7 +16,6 @@ class Home extends Component {
   }
   onLogin = (email) => {
     this.props.login(email)
-    console.log("Logging in with", email)
   }
 }
 

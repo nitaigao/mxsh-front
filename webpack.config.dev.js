@@ -3,6 +3,7 @@ var webpack = require('webpack');
 
 module.exports = {
   entry:  [
+    'babel-polyfill',
     'webpack-hot-middleware/client',
     './src/client'
   ],

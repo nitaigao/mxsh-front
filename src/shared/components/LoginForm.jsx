@@ -3,7 +3,7 @@ import        { connect }   from 'react-redux'
 
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 
-let LoginForm = (props) => {
+const LoginForm = (props) => {
   const { onLogin, handleSubmit } = props
   return (
     <form onSubmit={handleSubmit(values => onLogin(values.email))}>
@@ -13,5 +13,4 @@ let LoginForm = (props) => {
   );
 }
   
-
 export default reduxForm({form: 'login'})(LoginForm)
