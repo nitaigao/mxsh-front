@@ -1,12 +1,12 @@
 import React                 from 'react';
 import { Route, IndexRoute } from 'react-router';
 
-import AppView   from './views/AppView';
+import Layout    from './layouts/Layout';
 
 import Home      from './components/Home';
 
 export default (
-  <Route path="/" component={AppView}>
+  <Route path="/" component={Layout}>
     <IndexRoute component={Home} />
   </Route>
 );

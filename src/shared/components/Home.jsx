@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import        { Link }      from 'react-router';
+import        { connect }   from 'react-redux'
 
-export default class Home extends Component {
+import LoginForm            from './LoginForm'
+
+import { login }            from  '../modules/authentication'
+
+class Home extends Component {
   render() {
     return (
       <div id="home">
-        <h1>I am a server side rendered React beast</h1>
-        <h2>I am coming for your babies</h2>
+        <LoginForm onLogin={this.onLogin} />
       </div>
-    );
+    )
   }
-
-  onLogin = (e) => {
-    e.preventDefault()
-    console.log("Logging in!")
+  onLogin = (email) => {
+    this.props.login(email)
+    console.log("Logging in with", email)
   }
 }
+
+export default connect(null, { login: login })(Home)

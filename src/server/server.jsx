@@ -1,8 +1,11 @@
 'use strict'
 
 import React                     from 'react'
+import { Provider }              from 'react-redux'
 import { RouterContext, match }  from 'react-router'
 import { renderToString }        from 'react-dom/server'
+
+import configureStore            from '../shared/configureStore'
 
 import express                   from 'express'
 import path                      from 'path'
@@ -48,8 +51,12 @@ app.use((req, res) => {
 
     if (!renderProps) return res.status(404).end('Not found.')
 
+    const store = configureStore()
+
     const InitialComponent = (
-      <RouterContext {...renderProps} />
+      <Provider store={store}>
+        <RouterContext {...renderProps} />
+      </Provider>
     )
 
     const componentHTML = renderToString(InitialComponent)
