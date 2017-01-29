@@ -4,6 +4,7 @@ import React                     from 'react'
 import { Provider }              from 'react-redux'
 import { RouterContext, match }  from 'react-router'
 import { renderToString }        from 'react-dom/server'
+import { trigger }               from 'redial';
 
 import configureStore            from '../shared/configureStore'
 
@@ -59,29 +60,41 @@ app.use((req, res) => {
 
     const store = configureStore()
 
-    const InitialComponent = (
-      <Provider store={store}>
-        <RouterContext {...renderProps} />
-      </Provider>
-    )
+    const { dispatch, getState } = store;
 
-    const componentHTML = renderToString(InitialComponent)
+    const locals = {
+      path: renderProps.location.pathname,
+      query: renderProps.location.query,
+      params: renderProps.params,
+      dispatch
+    }
 
-    const HTML = `
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <meta charset="utf-8">
-        <title>mxsh</title>
-      </head>
-      <body>
-        <div id="react-view">${componentHTML}</div>
-        <script type="application/javascript" src="/bundle.js"></script>
-      </body>
-    </html>    
-    `
-    
-    res.end(HTML)
+    const { components } = renderProps
+
+    trigger('fetch', components, locals)
+      .then(() => {
+        const html = renderToString(
+          <Provider store={store}>
+            <RouterContext {...renderProps} />
+          </Provider>
+        )
+
+        const HTML = `
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <meta charset="utf-8">
+              <title>mxsh</title>
+            </head>
+            <body>
+              <div id="react-view">${html}</div>
+              <script type="application/javascript" src="/bundle.js"></script>
+            </body>
+          </html>    
+          `
+
+        res.end(HTML)
+      })
   })
 })
 export default app
