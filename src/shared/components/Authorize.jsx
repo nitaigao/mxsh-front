@@ -12,7 +12,7 @@ const hooks = {
 const Authorize = (props) => {
   return (
     <div id="authorize">
-      ok!
+      <Link to='/'>Home</Link>
     </div>
   )
 }
