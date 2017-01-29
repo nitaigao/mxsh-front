@@ -1,0 +1,9 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "semi": [2, "never"],
+    "no-semi": [0, "always"],
+    "no-multi-spaces": ["error", { exceptions: { "ImportDeclaration": true, "VariableDeclarator": true } }],
+    "react/require-default-props": 2
+  }
+}
