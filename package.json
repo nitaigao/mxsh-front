@@ -6,6 +6,7 @@
   "scripts": {
     "start": "if [ \"$NODE_ENV\" = \"production\" ]; then yarn prod; else yarn server; fi",
     "prod": "yarn webpack && yarn server",
+    "lint": "yarn run eslint src",
     "server": "node ./src/server/index.js",
     "webpack": "node_modules/.bin/webpack --config webpack.config.prod.js"
   },

@@ -9,6 +9,6 @@ import Authorize from './components/Authorize'
 export default (
   <Route path='/' component={Layout}>
     <IndexRoute component={Home} />
-    <Route path="authorize/:token" component={Authorize} />
+    <Route path='authorize/:token' component={Authorize} />
   </Route>
 )

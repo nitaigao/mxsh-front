@@ -10,9 +10,9 @@ function post(resource, params) {
   return fetch(apiResource, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
-    body: jsonParams,
+    body: jsonParams
   })
 }
 

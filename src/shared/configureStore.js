@@ -5,7 +5,7 @@ import createSagaMiddleware      from 'redux-saga'
 
 import { reducer, saga }         from './modules/authentication'
 
-export default function configureStore(preloadedState={}) {
+export default function configureStore(preloadedState = {}) {
   const composeEnhancers = composeWithDevTools({})
   const sagaMiddleware = createSagaMiddleware()
   const middleWare = applyMiddleware(sagaMiddleware)
