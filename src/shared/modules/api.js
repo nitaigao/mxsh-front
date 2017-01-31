@@ -1,8 +1,9 @@
-import path from 'path-browserify'
-import fetch from 'isomorphic-fetch'
+import path    from 'path-browserify'
+import fetch   from 'isomorphic-fetch'
 
-function post(resource, params) {
-  const apiResource = path.join('api', resource)
+export function post(resource, params) {
+  const resoucePath = path.join('api', resource)
+  const apiResource = `http://mxsh.lvh.me:3000/${resoucePath}`
   const jsonParams = JSON.stringify(params)
   /* eslint-disable no-console */
   console.log('[POST]', '->', apiResource, jsonParams)
@@ -10,10 +11,14 @@ function post(resource, params) {
   return fetch(apiResource, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      Accept: 'application/json'
     },
-    body: jsonParams
-  })
+    body: jsonParams,
+    credentials: 'include'
+  }).then(response => response.json())
 }
 
-export default { post }
+export function get() {
+
+}

@@ -1,15 +1,25 @@
-import { createStore, applyMiddleware }           from 'redux'
-import { composeWithDevTools }   from 'redux-devtools-extension'
+import { createStore, applyMiddleware } from 'redux'
+import { composeWithDevTools }          from 'redux-devtools-extension'
+import { routerMiddleware }             from 'react-router-redux'
 
-import createSagaMiddleware      from 'redux-saga'
+import createSagaMiddleware             from 'redux-saga'
 
-import { reducer, saga }         from './modules/authentication'
+import { reducers }                     from './modules/authentication'
 
-export default function configureStore(preloadedState = {}) {
+import sagas                            from './modules/sagas'
+
+export default function configureStore(history, preloadedState = {}) {
+  const historyMiddleWare = routerMiddleware(history)
+
   const composeEnhancers = composeWithDevTools({})
+
   const sagaMiddleware = createSagaMiddleware()
-  const middleWare = applyMiddleware(sagaMiddleware)
-  const store = createStore(reducer, preloadedState, composeEnhancers(middleWare))
-  sagaMiddleware.run(saga)
+
+  const middleWare = applyMiddleware(sagaMiddleware, historyMiddleWare)
+
+  const store = createStore(reducers, preloadedState, composeEnhancers(middleWare))
+
+  sagas.forEach(saga => sagaMiddleware.run(saga))
+
   return store
 }

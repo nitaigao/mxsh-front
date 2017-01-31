@@ -4,7 +4,7 @@ import { Field, reduxForm } from 'redux-form'
 const LoginForm = (props) => {
   const { onLogin, handleSubmit } = props
   return (
-    <form onSubmit={handleSubmit(values => onLogin(values))}>
+    <form onSubmit={handleSubmit}>
       <Field name='email' component='input' type='email' />
       <button type='submit'>Login</button>
     </form>
@@ -12,8 +12,7 @@ const LoginForm = (props) => {
 }
 
 LoginForm.propTypes = {
-  handleSubmit: React.PropTypes.func.isRequired,
-  onLogin: React.PropTypes.func.isRequired
+  handleSubmit: React.PropTypes.func.isRequired
 }
 
 export default reduxForm({ form: 'login' })(LoginForm)

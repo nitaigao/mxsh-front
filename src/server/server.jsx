@@ -4,12 +4,14 @@ import React                     from 'react'
 import { Provider }              from 'react-redux'
 import { RouterContext, match }  from 'react-router'
 import { renderToString }        from 'react-dom/server'
-import { trigger }               from 'redial';
+import { trigger }               from 'redial'
 
 import configureStore            from '../shared/configureStore'
 
 import express                   from 'express'
-import proxy                     from 'express-http-proxy'
+import proxy                     from 'http-proxy-middleware'
+import cookies                   from 'react-cookie'
+import cookieParser              from 'cookie-parser'
 
 import path                      from 'path'
 import chokidar                  from 'chokidar'
@@ -18,6 +20,11 @@ const app                        = express()
 
 const ENVIRONMENT = process.env.NODE_ENV || 'development'
 const DEVELOPMENT = ENVIRONMENT === 'development'
+
+app.use(cookieParser())
+
+const API_HOST = process.env.API_HOST || 'http://mxsh.lvh.me:4000'
+app.use('/api', proxy({ target: API_HOST, changeOrigin: true }))
 
 if (DEVELOPMENT) {
   const webpack       = require('webpack')
@@ -42,14 +49,11 @@ if (DEVELOPMENT) {
   app.use(express.static(path.resolve(__dirname, '../../dist')))
 }
 
-const API_HOST = process.env.API_HOST || 'http://api.lvh.me:4000'
-
-app.use('/api', proxy(API_HOST))
-
 app.use((req, res) => {
   const routes = require('../shared/routes').default
   const location = req.url
   match({ routes, location }, (err, redirectLocation, renderProps) => {
+    var unplug = cookies.plugToRequest(req, res)
 
     if (err) { 
       console.error(err)
@@ -60,7 +64,7 @@ app.use((req, res) => {
 
     const store = configureStore()
 
-    const { dispatch, getState } = store;
+    const { dispatch, getState } = store
 
     const locals = {
       path: renderProps.location.pathname,
@@ -71,30 +75,43 @@ app.use((req, res) => {
 
     const { components } = renderProps
 
-    trigger('fetch', components, locals)
-      .then(() => {
-        const html = renderToString(
-          <Provider store={store}>
-            <RouterContext {...renderProps} />
-          </Provider>
-        )
-
-        const HTML = `
-          <!DOCTYPE html>
-          <html>
-            <head>
-              <meta charset="utf-8">
-              <title>mxsh</title>
-            </head>
-            <body>
-              <div id="react-view">${html}</div>
-              <script type="application/javascript" src="/bundle.js"></script>
-            </body>
-          </html>    
-          `
-
-        res.end(HTML)
-      })
+    if (true) {
+      const HTML = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <title>mxsh</title>
+        </head>
+        <body>
+          <div id="react-view"></div>
+          <script type="application/javascript" src="/bundle.js"></script>
+        </body>
+      </html>`
+      res.end(HTML)
+    } else {
+      trigger('fetch', components, locals)
+        .then(() => {
+          const html = renderToString(
+            <Provider store={store}>
+              <RouterContext {...renderProps} />
+            </Provider>
+          )
+          const HTML = `
+            <!DOCTYPE html>
+            <html>
+              <head>
+                <meta charset="utf-8">
+                <title>mxsh</title>
+              </head>
+              <body>
+                <div id="react-view">${html}</div>
+                <script type="application/javascript" src="/bundle.js"></script>
+              </body>
+            </html>`
+          res.end(HTML)
+        })
+    }
   })
 })
 export default app

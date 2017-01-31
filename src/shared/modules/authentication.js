@@ -1,9 +1,11 @@
 import { combineReducers }              from 'redux'
 import { createAction }                 from 'redux-actions'
 import { reducer as formReducer }       from 'redux-form'
-import { call, takeLatest }             from 'redux-saga/effects'
+import { push }                         from 'react-router-redux'
+import { call, put, takeLatest }        from 'redux-saga/effects'
 
 import { post }                         from './api'
+import { identitiesPath }               from './urls'
 
 export const LOGIN     = 'LOGIN'
 export const AUTHORIZE = 'AUTHORIZE'
@@ -11,14 +13,17 @@ export const AUTHORIZE = 'AUTHORIZE'
 export const login     = createAction(LOGIN, payload => payload)
 export const authorize = createAction(AUTHORIZE, payload => payload)
 
-export const reducer = combineReducers({ form: formReducer })
+export const reducers = combineReducers({ form: formReducer })
 
 function* performLogin({ payload }) {
   yield call(post, 'login', { login: payload })
 }
 
 function* performAuthorize({ payload }) {
-  yield call(post, 'authorize', { key: payload })
+  const auth = yield call(post, 'authorize', payload)
+  if (auth) {
+    yield put(push(identitiesPath))
+  }
 }
 
 export function* saga() {

@@ -7,7 +7,7 @@ const Layout = props => (
 )
 
 Layout.propTypes = {
-  children: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
+  children: React.PropTypes.shape().isRequired
 }
 
 export default Layout
