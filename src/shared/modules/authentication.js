@@ -7,8 +7,8 @@ import { call, put, takeLatest }        from 'redux-saga/effects'
 import { post }                         from './api'
 import { identitiesPath }               from './urls'
 
-export const LOGIN     = 'LOGIN'
-export const AUTHORIZE = 'AUTHORIZE'
+export const LOGIN     = 'AUTHENTICATION/LOGIN'
+export const AUTHORIZE = 'AUTHENTICATION/AUTHORIZE'
 
 export const login     = createAction(LOGIN, payload => payload)
 export const authorize = createAction(AUTHORIZE, payload => payload)
