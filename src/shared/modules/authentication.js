@@ -15,11 +15,11 @@ export const authorize = createAction(AUTHORIZE, payload => payload)
 
 export const reducers = combineReducers({ form: formReducer })
 
-function* performLogin({ payload }) {
+export function* performLogin({ payload }) {
   yield call(post, 'login', { login: payload })
 }
 
-function* performAuthorize({ payload }) {
+export function* performAuthorize({ payload }) {
   const auth = yield call(post, 'authorize', payload)
   if (auth) {
     yield put(push(identitiesPath))
