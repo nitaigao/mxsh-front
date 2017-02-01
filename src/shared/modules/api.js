@@ -19,6 +19,18 @@ export function post(resource, params) {
   }).then(response => response.json())
 }
 
-export function get() {
-
+export function get(resource) {
+  const resoucePath = path.join('api', resource)
+  const apiResource = `http://mxsh.lvh.me:3000/${resoucePath}`
+  /* eslint-disable no-console */
+  console.log('[GET]', '->', apiResource)
+  /* eslint-enable no-console */
+  return fetch(apiResource, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json'
+    },
+    credentials: 'include'
+  }).then(response => response.json())
 }

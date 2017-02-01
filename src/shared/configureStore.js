@@ -4,8 +4,7 @@ import { routerMiddleware }             from 'react-router-redux'
 
 import createSagaMiddleware             from 'redux-saga'
 
-import { reducers }                     from './modules/authentication'
-
+import reducers                         from './modules/reducers'
 import sagas                            from './modules/sagas'
 
 export default function configureStore(history, preloadedState = {}) {

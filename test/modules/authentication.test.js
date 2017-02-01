@@ -27,6 +27,6 @@ describe('(Autentication)', () => {
     const payload = { token: 'VALID_TOKEN' }
     const gen = performAuthorize({ payload: payload })
     expect(gen.next().value).to.deep.equal(call(post, 'authorize', payload))
-    expect(gen.next(null).value).to.not.deep.equal(put(push(identitiesPath)))
+    expect(gen.next().value).to.deep.equal(undefined)
   })
 })
