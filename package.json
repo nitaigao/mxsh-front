@@ -1,5 +1,7 @@
 {
   "name": "front",
+  "description": "Front end for mxsh.io",
+  "repository": "https://github.com/kindnessorg/kindness-frontend",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
