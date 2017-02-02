@@ -7,15 +7,28 @@ import LoginForm            from './LoginForm'
 import { login }            from  '../modules/authentication'
 
 class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { submitted: false }
+  }
+
   onLogin = (values) => {
     this.props.login(values)
+    this.setState({submitted: true})
+  }
+
+  get loginForm() {
+    if (this.state.submitted) {
+      return (<p>Check your email!</p>)
+    } else {
+      return (<LoginForm onSubmit={this.onLogin} />)
+    }
   }
 
   render() {
     return (
       <div id='home'>
-        <p>Your best email, its the last time you will ever need it</p>
-        <LoginForm onSubmit={this.onLogin} />
+        {this.loginForm}
       </div>
     )
   }

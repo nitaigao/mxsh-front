@@ -11,7 +11,7 @@ const hooks = {
 
 const Authorize = () => (
   <div id='authorize'>
-    <Link to='/'>Home</Link>
+    <p>Logging you in...</p>
   </div>
 )
 
