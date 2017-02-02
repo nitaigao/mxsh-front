@@ -1,11 +1,11 @@
-import React                   from 'react'
-import { Link }                from 'react-router'
-import { connect }             from 'react-redux'
-import { provideHooks }        from 'redial'
+import React, { Component }     from 'react'
+import { Link }                 from 'react-router'
+import { connect }              from 'react-redux'
+import { provideHooks }         from 'redial'
 
-import { mine }                from  '../modules/identities'
+import { mine, createIdentity } from  '../modules/identities'
 
-import { identities }          from  '../selectors'
+import { identities }           from  '../selectors'
 
 const hooks = {
   fetch: ({ dispatch, params }) => dispatch(mine())
@@ -15,18 +15,26 @@ const mapStateToProps = (state) => ({
   identities: identities(state)
 })
 
-const Identities = (props) => { 
-  const { identities } = props
-  return (
-    <div id='identities'>
-      Identities
-      <ul>
-        {identities.map((identity, i) => {
-          return (<li key={i}>{identity.email}</li>)
-        })}
-      </ul>
-    </div>
-  )
+class Identities extends Component {
+  render () {
+    const { identities } = this.props
+    return (
+      <div id='identities'>
+        Identities
+        <button onClick={this.handleNewClick}>New Identity</button>
+        <ul>
+          {identities.map((identity, i) => {
+            return (<li key={i}>{identity.email}</li>)
+          })}
+        </ul>
+      </div>
+    )
+  }
+
+  handleNewClick = () => {
+    const { createIdentity } = this.props
+    createIdentity()
+  }
 }
 
 Identities.propTypes = {
@@ -34,4 +42,4 @@ Identities.propTypes = {
 }
 
 const IdentitiesWithHooks = provideHooks(hooks)(Identities)
-export default connect(mapStateToProps)(IdentitiesWithHooks)
+export default connect(mapStateToProps, { createIdentity })(IdentitiesWithHooks)

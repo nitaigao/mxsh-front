@@ -7,7 +7,6 @@ import LoginForm            from './LoginForm'
 import { login }            from  '../modules/authentication'
 
 class Home extends Component {
-
   onLogin = (values) => {
     this.props.login(values)
   }

@@ -1,36 +1,30 @@
-import path    from 'path-browserify'
-import fetch   from 'isomorphic-fetch'
+import fetch                    from 'isomorphic-fetch'
+import { FRONTEND_API_PREFIX }  from '../configuration'
 
-export function post(resource, params) {
-  const resoucePath = path.join('api', resource)
-  const apiResource = `http://mxsh.lvh.me:3000/${resoucePath}`
+const HEADERS = { 'Content-Type': 'application/json', Accept: 'application/json' }
+
+export function post(resource, params = {}) {
+  const resourcePath = `${FRONTEND_API_PREFIX}/${resource}`
   const jsonParams = JSON.stringify(params)
   /* eslint-disable no-console */
-  console.log('[POST]', '->', apiResource, jsonParams)
+  console.log('[POST]', '->', resourcePath, jsonParams)
   /* eslint-enable no-console */
-  return fetch(apiResource, {
+  return fetch(resourcePath, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json'
-    },
+    headers: HEADERS,
     body: jsonParams,
     credentials: 'include'
   }).then(response => response.json())
 }
 
 export function get(resource) {
-  const resoucePath = path.join('api', resource)
-  const apiResource = `http://mxsh.lvh.me:3000/${resoucePath}`
+  const resourcePath = `${FRONTEND_API_PREFIX}/${resource}`
   /* eslint-disable no-console */
-  console.log('[GET]', '->', apiResource)
+  console.log('[GET]', '->', resourcePath)
   /* eslint-enable no-console */
-  return fetch(apiResource, {
+  return fetch(resourcePath, {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json'
-    },
+    headers: HEADERS,
     credentials: 'include'
   }).then(response => response.json())
 }

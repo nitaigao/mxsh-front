@@ -1,14 +1,19 @@
 import { createAction, handleActions }  from 'redux-actions'
 import { takeLatest, call, put }        from 'redux-saga/effects'
-import { get }                          from './api'
+import { get, post }                    from './api'
 
 export const MINE                       = 'IDENTITIES/MINE'
 export const IDENTITIES_FETCH_SUCCEEDED = 'IDENTITIES/IDENTITIES_FETCH_SUCCEEDED/'
 
-export const mine     = createAction(MINE)
+export const CREATE_IDENTITY            = 'CREATE_IDENTITY/CREATE'
+export const CREATE_IDENTITY_SUCCEEDED  = 'CREATE_IDENTITY/CREATE_IDENTITY_SUCCEEDED'
+
+export const mine             = createAction(MINE)
+export const createIdentity   = createAction(CREATE_IDENTITY)
 
 const identitiesFetchReducer = handleActions({
-  [IDENTITIES_FETCH_SUCCEEDED]: (state, action) => state.concat(action.identities)
+  [IDENTITIES_FETCH_SUCCEEDED]: (state, action) => state.concat(action.identities),
+  [CREATE_IDENTITY_SUCCEEDED]: (state, action) => state.concat([action.identity])
 }, [])
 
 export const reducers = identitiesFetchReducer
@@ -20,8 +25,16 @@ export function* performMine() {
   }
 }
 
+export function* performCreateIdentity() {
+  const response = yield call(post, 'identities')
+  if (response) {
+    yield put({ type: CREATE_IDENTITY_SUCCEEDED, identity: response })
+  }
+}
+
 export function* saga() {
   yield [
-    takeLatest(MINE, performMine)
+    takeLatest(MINE, performMine),
+    takeLatest(CREATE_IDENTITY, performCreateIdentity)
   ]
 }

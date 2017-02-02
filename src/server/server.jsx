@@ -7,6 +7,7 @@ import { renderToString }        from 'react-dom/server'
 import { trigger }               from 'redial'
 
 import configureStore            from '../shared/configureStore'
+import config                    from '../shared/configuration'
 
 import express                   from 'express'
 import proxy                     from 'http-proxy-middleware'
@@ -62,7 +63,7 @@ app.use((req, res) => {
 
     if (!renderProps) return res.status(404).end('Not found.')
 
-    const store = configureStore()
+    const store = configureStore(config)
 
     const { dispatch, getState } = store
 
