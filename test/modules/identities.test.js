@@ -32,7 +32,7 @@ describe('(Autentication)', () => {
     expect(gen.next(identity).value).to.deep.equal(put({type: CREATE_IDENTITY_SUCCEEDED, identity: identity }))
   })
 
-    it('createIdentity does not populate the store a new identity on failure', () => {
+  it('createIdentity does not populate the store a new identity on failure', () => {
     const gen = performCreateIdentity()
     expect(gen.next().value).to.deep.equal(call(post, 'identities'))
     const identity = {email: 'test@example.com'}
