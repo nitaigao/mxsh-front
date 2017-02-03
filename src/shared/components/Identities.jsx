@@ -1,15 +1,11 @@
 import React, { Component }     from 'react'
 import { Link }                 from 'react-router'
 import { connect }              from 'react-redux'
-import { provideHooks }         from 'redial'
+import { first }                from 'lodash/first'
 
-import { mine, createIdentity } from  '../modules/identities'
+import { identities }       from  '../selectors'
 
-import { identities }           from  '../selectors'
-
-const hooks = {
-  fetch: ({ dispatch, params }) => dispatch(mine())
-}
+import { createIdentity } from  '../modules/identities'
 
 const mapStateToProps = (state) => ({
   identities: identities(state)
@@ -17,13 +13,13 @@ const mapStateToProps = (state) => ({
 
 class Identities extends Component {
   render () {
-    const { identities } = this.props
+    const { identities: { latest, existing } } = this.props
     return (
       <div id='identities'>
         Identities
         <button onClick={this.handleNewClick}>New Identity</button>
         <ul>
-          {identities.map((identity, i) => {
+          {existing.map((identity, i) => {
             return (<li key={i}>{identity.email}</li>)
           })}
         </ul>
@@ -38,8 +34,7 @@ class Identities extends Component {
 }
 
 Identities.propTypes = {
-  identities: React.PropTypes.array.isRequired
+  identities: React.PropTypes.object.isRequired
 }
 
-const IdentitiesWithHooks = provideHooks(hooks)(Identities)
-export default connect(mapStateToProps, { createIdentity })(IdentitiesWithHooks)
+export default connect(mapStateToProps, { createIdentity })(Identities)

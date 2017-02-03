@@ -1,4 +1,5 @@
 import fetch                    from 'isomorphic-fetch'
+import cookies                  from 'react-cookie'
 import { FRONTEND_API_PREFIX }  from '../configuration'
 
 const HEADERS = { 'Content-Type': 'application/json', Accept: 'application/json' }
@@ -9,9 +10,12 @@ export function post(resource, params = {}) {
   /* eslint-disable no-console */
   console.log('[POST]', '->', resourcePath, jsonParams)
   /* eslint-enable no-console */
+  const authCookie = cookies.load('auth')
   return fetch(resourcePath, {
     method: 'POST',
-    headers: HEADERS,
+    headers: { ...HEADERS,
+      Authorization: `Bearer ${authCookie}`
+    },
     body: jsonParams,
     credentials: 'include'
   }).then(response => response.json())
@@ -22,9 +26,12 @@ export function get(resource) {
   /* eslint-disable no-console */
   console.log('[GET]', '->', resourcePath)
   /* eslint-enable no-console */
+  const authCookie = cookies.load('auth')
   return fetch(resourcePath, {
     method: 'GET',
-    headers: HEADERS,
+    headers: { ...HEADERS,
+      Authorization: `Bearer ${authCookie}`
+    },
     credentials: 'include'
   }).then(response => response.json())
 }

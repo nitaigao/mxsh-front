@@ -12,9 +12,16 @@ export const mine             = createAction(MINE)
 export const createIdentity   = createAction(CREATE_IDENTITY)
 
 export const reducers = handleActions({
-  [IDENTITIES_FETCH_SUCCEEDED]: (state, action) => state.concat(action.identities),
-  [CREATE_IDENTITY_SUCCEEDED]: (state, action) => state.concat([action.identity])
-}, [])
+  [IDENTITIES_FETCH_SUCCEEDED]: (state, action) => ({
+    ...state,
+    existing: action.identities
+  }),
+  [CREATE_IDENTITY_SUCCEEDED]: (state, action) => ({
+    ...state,
+    latest: action.identity,
+    existing: state.existing.concat([action.identity])
+  })
+}, { latest: null, existing: [] })
 
 export function* performMine() {
   const response = yield call(get, 'identities')
