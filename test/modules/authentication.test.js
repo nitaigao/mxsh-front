@@ -3,8 +3,9 @@ const expect = require('chai').expect
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { push }                  from 'react-router-redux'
 import { post }                  from '../../src/shared/modules/api'
-import { identitiesPath }        from '../../src/shared/modules/urls'
+import { rootPath }              from '../../src/shared/modules/urls'
 import { 
+  AUTHORIZE_SUCCEEDED,
   performLogin,
   performAuthorize
 }                                from '../../src/shared/modules/authentication'
@@ -20,7 +21,8 @@ describe('(Autentication)', () => {
     const payload = { token: 'VALID_TOKEN' }
     const gen = performAuthorize({ payload: payload })
     expect(gen.next().value).to.deep.equal(call(post, 'authorize', payload))
-    expect(gen.next({}).value).to.deep.equal(put(push(identitiesPath)))
+    expect(gen.next({}).value).to.deep.equal(put({ type: AUTHORIZE_SUCCEEDED }))
+    expect(gen.next({}).value).to.deep.equal(put(push(rootPath)))
   })
 
   it('authorize doesnt redirect on an unsuccessful authorize', () => {

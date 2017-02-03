@@ -3,23 +3,24 @@ import        { connect }   from 'react-redux'
 
 import { Link }             from 'react-router'
 import LoginForm            from './LoginForm'
+import Identities           from './Identities'
 
 import { login }            from  '../modules/authentication'
 
+const mapStateToProps = state => ({
+  loggedIn: state.authentication.loggedIn
+})
+
 class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { submitted: false }
-  }
-
   onLogin = (values) => {
-    this.props.login(values)
-    this.setState({submitted: true})
+    const { login } = this.props
+    login(values)
   }
 
-  get loginForm() {
-    if (this.state.submitted) {
-      return (<p>Check your email!</p>)
+  get homeComponent() {
+    const { loggedIn } = this.props
+    if (loggedIn) {
+      return (<Identities />)
     } else {
       return (<LoginForm onSubmit={this.onLogin} />)
     }
@@ -28,7 +29,7 @@ class Home extends Component {
   render() {
     return (
       <div id='home'>
-        {this.loginForm}
+        {this.homeComponent}
       </div>
     )
   }
@@ -38,4 +39,4 @@ Home.propTypes = {
   login: React.PropTypes.func.isRequired
 }
 
-export default connect(null, { login })(Home)
+export default connect(mapStateToProps, { login })(Home)

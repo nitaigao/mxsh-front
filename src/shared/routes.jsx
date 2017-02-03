@@ -9,8 +9,7 @@ import Identities from './components/Identities'
 
 export default (
   <Route path='/' component={Layout}>
-    <IndexRoute component={Home} />
+    <IndexRoute ssr component={Home} />
     <Route path='authorize/:token' component={Authorize} />
-    <Route path='identities' component={Identities} />
   </Route>
 )

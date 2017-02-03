@@ -9,7 +9,9 @@ import routes                             from '../shared/routes'
 import configureStore                     from '../shared/configureStore'
 
 const history = createHistory()
-const store = configureStore(history)
+
+const preloadedState = window.__PRELOADED_STATE__
+const store = configureStore(history, preloadedState)
 
 const { dispatch } = store
 

@@ -7,7 +7,6 @@ import { renderToString }        from 'react-dom/server'
 import { trigger }               from 'redial'
 
 import configureStore            from '../shared/configureStore'
-import config                    from '../shared/configuration'
 
 import express                   from 'express'
 import proxy                     from 'http-proxy-middleware'
@@ -16,6 +15,7 @@ import cookieParser              from 'cookie-parser'
 
 import path                      from 'path'
 import chokidar                  from 'chokidar'
+import last                      from 'lodash/last'
 
 const app                        = express()
 
@@ -54,7 +54,7 @@ app.use((req, res) => {
   const routes = require('../shared/routes').default
   const location = req.url
   match({ routes, location }, (err, redirectLocation, renderProps) => {
-    var unplug = cookies.plugToRequest(req, res)
+    const unplug = cookies.plugToRequest(req, res)
 
     if (err) { 
       console.error(err)
@@ -63,20 +63,9 @@ app.use((req, res) => {
 
     if (!renderProps) return res.status(404).end('Not found.')
 
-    const store = configureStore(config)
+    const isSSR = last(renderProps.routes).ssr
 
-    const { dispatch, getState } = store
-
-    const locals = {
-      path: renderProps.location.pathname,
-      query: renderProps.location.query,
-      params: renderProps.params,
-      dispatch
-    }
-
-    const { components } = renderProps
-
-    if (true) {
+    if (!isSSR) {
       const HTML = `
       <!DOCTYPE html>
       <html>
@@ -90,29 +79,53 @@ app.use((req, res) => {
         </body>
       </html>`
       res.end(HTML)
-    } else {
-      trigger('fetch', components, locals)
-        .then(() => {
-          const html = renderToString(
-            <Provider store={store}>
-              <RouterContext {...renderProps} />
-            </Provider>
-          )
-          const HTML = `
-            <!DOCTYPE html>
-            <html>
-              <head>
-                <meta charset="utf-8">
-                <title>mxsh</title>
-              </head>
-              <body>
-                <div id="react-view">${html}</div>
-                <script type="application/javascript" src="/bundle.js"></script>
-              </body>
-            </html>`
-          res.end(HTML)
-        })
+      return
+    } 
+
+    const preloadedState = {
+      authentication: {
+        loggedIn: req.cookies.auth != null
+      }
     }
+    
+    const store = configureStore(null, preloadedState)
+
+    const { dispatch, getState } = store
+
+    const locals = {
+      path: renderProps.location.pathname,
+      query: renderProps.location.query,
+      params: renderProps.params,
+      dispatch
+    }
+
+    const { components } = renderProps
+
+    trigger('fetch', components, locals)
+      .then(() => {
+        const html = renderToString(
+          <Provider store={store}>
+            <RouterContext {...renderProps} />
+          </Provider>
+        )
+        const HTML = `
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <meta charset="utf-8">
+              <title>mxsh</title>
+            </head>
+            <body>
+              <div id="react-view">${html}</div>
+              <script>
+                 window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}
+              </script>
+              <script type="application/javascript" src="/bundle.js"></script>
+            </body>
+          </html>`
+        res.end(HTML)
+      })
   })
 })
+
 export default app

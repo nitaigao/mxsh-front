@@ -11,12 +11,10 @@ export const CREATE_IDENTITY_SUCCEEDED  = 'CREATE_IDENTITY/CREATE_IDENTITY_SUCCE
 export const mine             = createAction(MINE)
 export const createIdentity   = createAction(CREATE_IDENTITY)
 
-const identitiesFetchReducer = handleActions({
+export const reducers = handleActions({
   [IDENTITIES_FETCH_SUCCEEDED]: (state, action) => state.concat(action.identities),
   [CREATE_IDENTITY_SUCCEEDED]: (state, action) => state.concat([action.identity])
 }, [])
-
-export const reducers = identitiesFetchReducer
 
 export function* performMine() {
   const response = yield call(get, 'identities')

@@ -17,7 +17,7 @@ module.exports = {
   },
   module: {
     preLoaders: [
-      {test: /\.js$/, loader: "eslint-loader", exclude: /node_modules/}
+      { test: /\.js$/, loader: "eslint-loader", exclude: /node_modules/ }
     ],
     loaders: [
       {
@@ -32,7 +32,6 @@ module.exports = {
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
         API_HOST: JSON.stringify(process.env.API_HOST),
         FRONTEND_HOST: JSON.stringify(process.env.FRONTEND_HOST)
       }

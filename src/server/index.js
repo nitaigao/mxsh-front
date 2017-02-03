@@ -1,11 +1,11 @@
-'use strict';
-
 require('babel-register')
-require("babel-polyfill")
+require('babel-polyfill')
 
-var server = require('./server');
+const server = require('./server')
 
-var PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000
 
-server.default.listen(PORT, () => 
+server.default.listen(PORT, () =>
+  /* eslint-disable no-console */
   console.log('Listening on port', PORT))
+  /* eslint-enable no-console */
