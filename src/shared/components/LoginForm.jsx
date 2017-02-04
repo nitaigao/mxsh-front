@@ -6,6 +6,8 @@ import isEmail              from 'validator/lib/isEmail'
 const email = value => 
   value && !isEmail(value) ? 'Invalid email address' : undefined
 
+const required = value => value ? undefined : 'Email is required'
+
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
     {touched && ((error && <div>{error}</div>) || (warning && <div>{warning}</div>))}
@@ -27,14 +29,13 @@ class LoginForm extends React.Component {
 
   render() {
     if (this.state.submitted) {
-      console.log(this.state)
-      return (<p>Check you <a href={`http://${this.state.provider}`}>{this.state.provider}</a> for a login link.</p>)
+      return (<p>Check your <a href={`http://${this.state.provider}`}>{this.state.provider}</a> mailbox for a login link.</p>)
     } else {
       const { handleSubmit } = this.props
       return (
         <form onSubmit={handleSubmit(this.onSubmit)}>
           <p>Your best email, its the last time you will ever need it</p>
-          <Field name='email' label='Email' component={renderField} type='email' validate={email} />
+          <Field name='email' label='Email' component={renderField} type='email' validate={[required, email]} />
           <button type='submit'>Login</button>
         </form>
       )

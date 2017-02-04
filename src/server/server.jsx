@@ -7,11 +7,14 @@ import { renderToString }        from 'react-dom/server'
 import { trigger }               from 'redial'
 
 import configureStore            from '../shared/configureStore'
+import { RAVEN_PUBLIC_DSN, 
+         RAVEN_PRIVATE_DSN }     from '../shared/configuration'
 
 import express                   from 'express'
 import proxy                     from 'http-proxy-middleware'
 import cookies                   from 'react-cookie'
 import cookieParser              from 'cookie-parser'
+import Raven                     from 'raven'
 
 import path                      from 'path'
 import chokidar                  from 'chokidar'
@@ -50,6 +53,25 @@ if (DEVELOPMENT) {
   app.use(express.static(path.resolve(__dirname, '../../dist')))
 }
 
+const template = (preloadedState, html) => {
+  return `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>mxsh</title>
+        <script src="https://cdn.ravenjs.com/3.10.0/raven.min.js" crossorigin="anonymous"></script>
+        <script>Raven.config('${RAVEN_PUBLIC_DSN}').install();</script>        
+      </head>
+      <body>
+        <div id="react-view">${html}</div>
+        ${preloadedState}
+        <script type="application/javascript" src="/bundle.js"></script>
+      </body>
+    </html>`
+}
+
 app.use((req, res) => {
   const routes = require('../shared/routes').default
   const location = req.url
@@ -66,19 +88,7 @@ app.use((req, res) => {
     const isSSR = last(renderProps.routes).ssr
 
     if (!isSSR) {
-      const HTML = `
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <meta charset="utf-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1">
-          <title>mxsh</title>
-        </head>
-        <body>
-          <div id="react-view"></div>
-          <script type="application/javascript" src="/bundle.js"></script>
-        </body>
-      </html>`
+      const HTML = template()
       res.end(HTML)
       return
     } 
@@ -102,6 +112,8 @@ app.use((req, res) => {
 
     const { components } = renderProps
 
+    Raven.config(RAVEN_PRIVATE_DSN).install()
+
     trigger('fetch', components, locals)
       .then(() => {
         const html = renderToString(
@@ -109,24 +121,13 @@ app.use((req, res) => {
             <RouterContext {...renderProps} />
           </Provider>
         )
-        const HTML = `
-          <!DOCTYPE html>
-          <html>
-            <head>
-              <meta charset="utf-8">
-              <meta name="viewport" content="width=device-width, initial-scale=1">
-              <title>mxsh</title>
-            </head>
-            <body>
-              <div id="react-view">${html}</div>
-              <script>
-                 window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}
-              </script>
-              <script type="application/javascript" src="/bundle.js"></script>
-            </body>
-          </html>`
+        const state = `
+          <script>
+             window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}
+          </script>`
+        const HTML = template(state, html)
         res.end(HTML)
-      })
+      }).catch(err => Raven.captureException(err))
   })
 })
 

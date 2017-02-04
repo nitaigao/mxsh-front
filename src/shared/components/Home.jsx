@@ -23,9 +23,8 @@ class Home extends Component {
     const { loggedIn } = this.props
     if (loggedIn) {
       return (<Identities />)
-    } else {
-      return (<LoginForm onLogin={this.onLogin} />)
-    }
+    } 
+    return (<LoginForm onLogin={this.onLogin} />)
   }
 
   render() {
