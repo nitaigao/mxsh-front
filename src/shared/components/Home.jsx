@@ -6,7 +6,7 @@ import { Link }             from 'react-router'
 import LoginForm            from './LoginForm'
 import Identities           from './Identities'
 
-import { login }            from  '../modules/authentication'
+import { login, logout }    from  '../modules/authentication'
 import { mine }             from  '../modules/identities'
 
 const mapStateToProps = state => ({
@@ -19,6 +19,12 @@ class Home extends Component {
     login(values)
   }
 
+  logout = (e) => {
+    e.preventDefault()
+    const { logout } = this.props
+    logout()
+  }
+
   get homeComponent() {
     const { loggedIn } = this.props
     if (loggedIn) {
@@ -28,8 +34,12 @@ class Home extends Component {
   }
 
   render() {
+    const { loggedIn } = this.props
     return (
       <div id='home'>
+        {loggedIn && 
+          <Link href='#' onClick={this.logout}>Logout</Link>
+        }
         {this.homeComponent}
       </div>
     )
@@ -40,4 +50,4 @@ Home.propTypes = {
   login: React.PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, { login })(Home)
+export default connect(mapStateToProps, { login, logout })(Home)

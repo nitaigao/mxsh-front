@@ -35,3 +35,18 @@ export function get(resource) {
     credentials: 'include'
   }).then(response => response.json())
 }
+
+export function del(resource) {
+  const resourcePath = `${FRONTEND_API_PREFIX}/${resource}`
+  /* eslint-disable no-console */
+  console.log('[DELETE]', '->', resourcePath)
+  /* eslint-enable no-console */
+  const authCookie = cookies.load('auth')
+  return fetch(resourcePath, {
+    method: 'DELETE',
+    headers: { ...HEADERS,
+      Authorization: `Bearer ${authCookie}`
+    },
+    credentials: 'include'
+  }).then(response => response.json())
+}
