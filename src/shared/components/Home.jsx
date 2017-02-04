@@ -9,10 +9,6 @@ import Identities           from './Identities'
 import { login }            from  '../modules/authentication'
 import { mine }             from  '../modules/identities'
 
-const hooks = {
-  fetch: ({ dispatch, params }) => dispatch(mine())
-}
-
 const mapStateToProps = state => ({
   loggedIn: state.authentication.loggedIn
 })
@@ -28,7 +24,7 @@ class Home extends Component {
     if (loggedIn) {
       return (<Identities />)
     } else {
-      return (<LoginForm onSubmit={this.onLogin} />)
+      return (<LoginForm onLogin={this.onLogin} />)
     }
   }
 
@@ -45,5 +41,4 @@ Home.propTypes = {
   login: React.PropTypes.func.isRequired
 }
 
-const HomeWithHooks = provideHooks(hooks)(Home)
-export default connect(mapStateToProps, { login })(HomeWithHooks)
+export default connect(mapStateToProps, { login })(Home)

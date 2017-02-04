@@ -5,13 +5,24 @@ import { first }                from 'lodash/first'
 
 import { identities }       from  '../selectors'
 
-import { createIdentity } from  '../modules/identities'
+import { mine, createIdentity } from  '../modules/identities'
 
 const mapStateToProps = (state) => ({
   identities: identities(state)
 })
 
+const mapDispatchToProps = (dispatch) => ({
+  dispatch,
+  createIdentity,
+  mine
+})
+
 class Identities extends Component {
+  componentWillMount() {
+    const { mine, dispatch } = this.props
+    dispatch(mine())
+  }
+
   render () {
     const { identities: { latest, existing } } = this.props
     return (
@@ -37,4 +48,4 @@ Identities.propTypes = {
   identities: React.PropTypes.object.isRequired
 }
 
-export default connect(mapStateToProps, { createIdentity })(Identities)
+export default connect(mapStateToProps, mapDispatchToProps)(Identities)

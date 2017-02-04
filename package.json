@@ -19,6 +19,7 @@
     "babel-polyfill": "^6.22.0",
     "babel-register": "^6.22.0",
     "cookie-parser": "^1.4.3",
+    "email-addresses": "^2.0.2",
     "express": "^4.14.0",
     "history": "^3.2.0",
     "http-proxy-middleware": "^0.17.3",
@@ -37,7 +38,8 @@
     "redux-actions": "^1.2.1",
     "redux-devtools-extension": "^1.0.0",
     "redux-form": "^6.5.0",
-    "redux-saga": "^0.14.3"
+    "redux-saga": "^0.14.3",
+    "validator": "^6.2.1"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
