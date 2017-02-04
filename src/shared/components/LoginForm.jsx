@@ -22,7 +22,8 @@ class LoginForm extends React.Component {
   }
 
   onSubmit = (values) => {
-    console.log("onSubmit!", values)
+    const { onLogin } = this.props
+    onLogin(values)
     const email = addrs.parseOneAddress(values.email)
     this.setState({submitted: true, provider: email.domain})
   }
