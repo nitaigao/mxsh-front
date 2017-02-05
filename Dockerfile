@@ -10,13 +10,15 @@ RUN npm install -g yarn@0.17.10 --quiet
 COPY package.json /app/
 COPY yarn.lock /app/
 RUN yarn install
-RUN yarn compile:prod
 
 # remove un-used build tools
 RUN apk del make gcc g++ python
 
 # install app
 COPY . /app
+
+# compile app
+RUN yarn compile:prod
 
 EXPOSE 3000
 CMD [ "yarn", "start" ]
