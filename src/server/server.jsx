@@ -20,9 +20,6 @@ import last                      from 'lodash/last'
 
 const app                        = express()
 
-const ENVIRONMENT = process.env.NODE_ENV || 'development'
-const DEVELOPMENT = ENVIRONMENT === 'development'
-
 Raven.config(RAVEN_PRIVATE_DSN).install()
 
 app.use(Raven.requestHandler(RAVEN_PRIVATE_DSN));
@@ -34,28 +31,7 @@ app.use('/api', proxy({ target: API_HOST, changeOrigin: true, onError: (err, req
   Raven.captureException(err)
 }}))
 
-// if (DEVELOPMENT) {
-//   const webpack       = require('webpack')
-//   const webpackConfig = require('../../webpack.config.dev.js')
-//   const compiler      = webpack(webpackConfig)
-
-//   app.use(require("webpack-dev-middleware")(compiler, {
-//     noInfo: true, publicPath: webpackConfig.output.publicPath
-//   }))
-//   app.use(require("webpack-hot-middleware")(compiler))
-
-//   const watcher = chokidar.watch('./src/shared')
-//   watcher.on('ready', () => {
-//     watcher.on('all', () => {
-//       console.log("Clearing /shared/ module cache from server")
-//       Object.keys(require.cache).forEach(function(id) {
-//         if (/[\/\\]shared[\/\\]/.test(id)) delete require.cache[id]
-//       })
-//     })
-//   })
-// } else {
-  app.use(express.static('dist'))
-// }
+app.use(express.static('dist'))
 
 const template = (preloadedState, html) => {
   return `
