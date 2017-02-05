@@ -79,8 +79,8 @@ const template = (preloadedState, html) => {
         </script>
       </head>
       <body>
-        <div id="react-view">${html}</div>
-        ${preloadedState}
+        <div id="react-view">${html || ''}</div>
+        ${preloadedState || ''}
         <script type="application/javascript" src="/bundle.js"></script>
       </body>
     </html>`
