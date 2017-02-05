@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "if [ \"$NODE_ENV\" = \"production\" ]; then yarn prod; else yarn dev; fi",
-    "prod": "yarn server",
+    "prod": "yarn compile:prod && yarn server",
     "dev": "concurrently 'yarn compile:client:dev' 'yarn compile:server:dev' 'yarn server'",
     "compile:prod":        "yarn compile:client:prod && yarn compile:server:prod",
     "compile:client:prod": "node_modules/.bin/webpack --config ./webpack.config.client.js",
