@@ -25,10 +25,16 @@ const app                        = express()
 const ENVIRONMENT = process.env.NODE_ENV || 'development'
 const DEVELOPMENT = ENVIRONMENT === 'development'
 
+Raven.config(RAVEN_PRIVATE_DSN).install()
+
+app.use(Raven.requestHandler(RAVEN_PRIVATE_DSN));
 app.use(cookieParser())
+app.use(Raven.errorHandler(RAVEN_PRIVATE_DSN))
 
 const API_HOST = process.env.API_HOST || 'http://mxsh.lvh.me:4000'
-app.use('/api', proxy({ target: API_HOST, changeOrigin: true }))
+app.use('/api', proxy({ target: API_HOST, changeOrigin: true, onError: (err, req, res) => {
+  Raven.captureException(err)
+}}))
 
 if (DEVELOPMENT) {
   const webpack       = require('webpack')
@@ -111,8 +117,6 @@ app.use((req, res) => {
     }
 
     const { components } = renderProps
-
-    Raven.config(RAVEN_PRIVATE_DSN).install()
 
     trigger('fetch', components, locals)
       .then(() => {
