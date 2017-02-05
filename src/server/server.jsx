@@ -1,5 +1,3 @@
-'use strict'
-
 import React                     from 'react'
 import { Provider }              from 'react-redux'
 import { RouterContext, match }  from 'react-router'
@@ -36,28 +34,28 @@ app.use('/api', proxy({ target: API_HOST, changeOrigin: true, onError: (err, req
   Raven.captureException(err)
 }}))
 
-if (DEVELOPMENT) {
-  const webpack       = require('webpack')
-  const webpackConfig = require('../../webpack.config.dev.js')
-  const compiler      = webpack(webpackConfig)
+// if (DEVELOPMENT) {
+//   const webpack       = require('webpack')
+//   const webpackConfig = require('../../webpack.config.dev.js')
+//   const compiler      = webpack(webpackConfig)
 
-  app.use(require("webpack-dev-middleware")(compiler, {
-    noInfo: true, publicPath: webpackConfig.output.publicPath
-  }))
-  app.use(require("webpack-hot-middleware")(compiler))
+//   app.use(require("webpack-dev-middleware")(compiler, {
+//     noInfo: true, publicPath: webpackConfig.output.publicPath
+//   }))
+//   app.use(require("webpack-hot-middleware")(compiler))
 
-  const watcher = chokidar.watch('./src/shared')
-  watcher.on('ready', () => {
-    watcher.on('all', () => {
-      console.log("Clearing /shared/ module cache from server")
-      Object.keys(require.cache).forEach(function(id) {
-        if (/[\/\\]shared[\/\\]/.test(id)) delete require.cache[id]
-      })
-    })
-  })
-} else {
-  app.use(express.static(path.resolve(__dirname, '../../dist')))
-}
+//   const watcher = chokidar.watch('./src/shared')
+//   watcher.on('ready', () => {
+//     watcher.on('all', () => {
+//       console.log("Clearing /shared/ module cache from server")
+//       Object.keys(require.cache).forEach(function(id) {
+//         if (/[\/\\]shared[\/\\]/.test(id)) delete require.cache[id]
+//       })
+//     })
+//   })
+// } else {
+  app.use(express.static('dist'))
+// }
 
 const template = (preloadedState, html) => {
   return `

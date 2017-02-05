@@ -6,6 +6,10 @@
     "node": true,
     "es6": true
   },
+  "globals": {
+      "__DEV__": false,
+      "__PROD__": false
+  },
   "rules": {
     "semi": [2, "never"],
     "comma-dangle": [2, "never"],

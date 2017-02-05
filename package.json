@@ -6,12 +6,16 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "if [ \"$NODE_ENV\" = \"production\" ]; then yarn prod; else yarn server; fi",
-    "prod": "yarn webpack && yarn server",
+    "start": "if [ \"$NODE_ENV\" = \"production\" ]; then yarn prod; else yarn dev; fi",
+    "prod": "yarn compile:client:prod && yarn compile:server:prod && yarn server",
+    "dev": "concurrently 'yarn compile:client:dev' 'yarn compile:server:dev' 'yarn server'",
+    "compile:client:prod": "node_modules/.bin/webpack --config webpack.config.client.js",
+    "compile:server:prod": "node_modules/.bin/webpack --config webpack.config.server.js",
+    "compile:client:dev":  "node_modules/.bin/webpack --config webpack.config.client.js --watch",
+    "compile:server:dev":  "node_modules/.bin/webpack --config webpack.config.server.js --watch",
     "lint": "node_modules/.bin/eslint src",
-    "server": "node ./src/server/index.js",
-    "webpack": "node_modules/.bin/webpack --config webpack.config.prod.js",
-    "test": "node_modules/.bin/mocha --recursive --compilers js:babel-register,js:babel-polyfill"
+    "test": "node_modules/.bin/mocha --recursive --compilers js:babel-register,js:babel-polyfill",
+    "server": "node ./dist/server.js"
   },
   "dependencies": {
     "babel-core": "^6.22.1",
@@ -54,6 +58,7 @@
     "babel-preset-stage-0": "^6.22.0",
     "chai": "^3.5.0",
     "chokidar": "^1.6.1",
+    "concurrently": "^3.1.0",
     "eslint": "^3.14.1",
     "eslint-config-airbnb": "^14.0.0",
     "eslint-loader": "^1.6.1",
@@ -63,9 +68,10 @@
     "mocha": "^3.2.0",
     "nodemon": "^1.11.0",
     "react-hot-loader": "^3.0.0-beta.6",
-    "webpack": "^1.14.0",
+    "webpack": "^2.2.1",
     "webpack-dev-middleware": "^1.9.0",
     "webpack-dev-server": "^1.16.2",
-    "webpack-hot-middleware": "^2.15.0"
+    "webpack-hot-middleware": "^2.15.0",
+    "webpack-node-externals": "^1.5.4"
   }
 }

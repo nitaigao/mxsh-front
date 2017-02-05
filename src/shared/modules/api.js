@@ -7,9 +7,9 @@ const HEADERS = { 'Content-Type': 'application/json', Accept: 'application/json'
 export function post(resource, params = {}) {
   const resourcePath = `${FRONTEND_API_PREFIX}/${resource}`
   const jsonParams = JSON.stringify(params)
-  /* eslint-disable no-console */
-  console.log('[POST]', '->', resourcePath, jsonParams)
-  /* eslint-enable no-console */
+  if (__DEV__) {
+    console.log('[POST]', '->', resourcePath, jsonParams) // eslint-disable-line no-console
+  }
   const authCookie = cookies.load('auth')
   return fetch(resourcePath, {
     method: 'POST',
@@ -23,9 +23,9 @@ export function post(resource, params = {}) {
 
 export function get(resource) {
   const resourcePath = `${FRONTEND_API_PREFIX}/${resource}`
-  /* eslint-disable no-console */
-  console.log('[GET]', '->', resourcePath)
-  /* eslint-enable no-console */
+  if (__DEV__) {
+    console.log('[GET]', '->', resourcePath) // eslint-disable-line no-console
+  }
   const authCookie = cookies.load('auth')
   return fetch(resourcePath, {
     method: 'GET',
