@@ -40,6 +40,7 @@ const template = (preloadedState, html) => {
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="apple-mobile-web-app-capable" content="yes">
         <title>mxsh</title>
         <script src="https://cdn.ravenjs.com/3.10.0/raven.min.js" crossorigin="anonymous"></script>
         <script>Raven.config('${RAVEN_PUBLIC_DSN}').install();</script>
