@@ -1,6 +1,8 @@
 const path    = require('path')
 const webpack = require('webpack')
 
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+
 const PRODUCTION  = process.env.NODE_ENV === 'production'
 const DEVELOPMENT = process.env.NODE_ENV === undefined || process.env.NODE_ENV === 'development'
 
@@ -31,6 +33,9 @@ module.exports = {
     ]
   },
   plugins: [
+    new CopyWebpackPlugin([
+      { from: path.join(__dirname, 'src', 'static') }
+    ]),
     new webpack.DefinePlugin({
       __DEV__:  JSON.stringify(DEVELOPMENT),
       __PROD__: JSON.stringify(PRODUCTION),
