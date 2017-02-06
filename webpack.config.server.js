@@ -38,9 +38,11 @@ module.exports = {
       __DEV__:  JSON.stringify(DEVELOPMENT),
       __PROD__: JSON.stringify(PRODUCTION),
       'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-        API_HOST: JSON.stringify(process.env.API_HOST),
-        FRONTEND_HOST: JSON.stringify(process.env.FRONTEND_HOST)
+        NODE_ENV:          JSON.stringify(process.env.NODE_ENV),
+        API_HOST:          JSON.stringify(process.env.API_HOST),
+        FRONTEND_HOST:     JSON.stringify(process.env.FRONTEND_HOST),
+        RAVEN_PUBLIC_DSN:  JSON.stringify(process.env.RAVEN_PUBLIC_DSN),
+        RAVEN_PRIVATE_DSN: JSON.stringify(process.env.RAVEN_PRIVATE_DSN)
       }
     })
   ]

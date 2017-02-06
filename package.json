@@ -11,7 +11,6 @@
     "dev": "concurrently 'yarn compile:client:dev' 'yarn compile:server:dev' 'yarn server'",
     "compile": "if [ \"$NODE_ENV\" = \"production\" ]; then yarn compile:prod; else yarn compile:dev; fi",
     "compile:prod": "yarn compile:client:prod && yarn compile:server:prod",
-    "compile:dev": "yarn compile:client:dev && yarn compile:server:dev",
     "compile:client:prod": "node_modules/.bin/webpack --config ./webpack.config.client.js",
     "compile:server:prod": "node_modules/.bin/webpack --config ./webpack.config.server.js",
     "compile:client:dev": "node_modules/.bin/webpack --config ./webpack.config.client.js --watch",
