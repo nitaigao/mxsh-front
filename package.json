@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "if [ \"$NODE_ENV\" = \"production\" ]; then yarn prod; else yarn dev; fi",
-    "prod": "yarn compile:prod && yarn server",
+    "prod": "yarn server",
     "dev": "concurrently 'yarn compile:client:dev' 'yarn compile:server:dev' 'yarn server'",
     "compile": "if [ \"$NODE_ENV\" = \"production\" ]; then yarn compile:prod; else yarn compile:dev; fi",
     "compile:prod": "yarn compile:client:prod && yarn compile:server:prod",
