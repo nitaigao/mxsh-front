@@ -30,7 +30,7 @@ class LoginForm extends React.Component {
 
   render() {
     if (this.state.submitted) {
-      return (<p>Check your <a href={`http://${this.state.provider}`}>{this.state.provider}</a> mailbox for a login link.</p>)
+      return (<p>Check your <a target='_blank' href={`http://${this.state.provider}`}>{this.state.provider}</a> mailbox for a login link.</p>)
     } else {
       const { handleSubmit } = this.props
       return (
