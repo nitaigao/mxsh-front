@@ -14,11 +14,6 @@ RUN yarn install
 # remove un-used build tools
 RUN apk del make gcc g++ python
 
-ENV API_HOST <API_HOST>
-ENV FRONTEND_HOST <FRONTEND_HOST>
-ENV SENTRY_PUBLIC_DSN <SENTRY_PUBLIC_DSN>
-ENV SENTRY_PRIVATE_DSN <SENTRY_PRIVATE_DSN>
-
 # install app
 COPY . /app
 
