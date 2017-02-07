@@ -18,7 +18,7 @@ RUN apk del make gcc g++ python
 COPY . /app
 
 # compile app
-RUN yarn compile:prod
+RUN yarn compile
 
 EXPOSE 3000
 CMD [ "yarn", "start" ]
