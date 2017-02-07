@@ -15,7 +15,7 @@
     "compile:client:dev": "node_modules/.bin/webpack --config ./webpack.config.client.js --watch",
     "compile:server:dev": "node_modules/.bin/webpack --config ./webpack.config.server.js --watch",
     "lint": "node_modules/.bin/eslint src",
-    "test": "node_modules/.bin/mocha --recursive --compilers js:babel-register,js:babel-polyfill",
+    "test": "node_modules/.bin/mocha --require test/setup.js --recursive --compilers js:babel-register,js:babel-polyfill",
     "server": "node ./dist/server.js"
   },
   "dependencies": {
