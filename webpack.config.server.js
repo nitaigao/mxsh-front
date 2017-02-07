@@ -36,14 +36,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       __DEV__:               JSON.stringify(DEVELOPMENT),
-      __PROD__:              JSON.stringify(PRODUCTION),
-      'process.env': {
-        NODE_ENV:           JSON.stringify(process.env.NODE_ENV),
-        API_HOST__:         JSON.stringify(process.env.API_HOST),
-        FRONTEND_HOST:      JSON.stringify(process.env.FRONTEND_HOST),
-        SENTRY_PUBLIC_DSN:  JSON.stringify(process.env.SENTRY_PUBLIC_DSN),
-        SENTRY_PRIVATE_DSN: JSON.stringify(process.env.SENTRY_PRIVATE_DSN),
-      }
+      __PROD__:              JSON.stringify(PRODUCTION)
     })
   ]
 };

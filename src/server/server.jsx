@@ -5,9 +5,10 @@ import { renderToString }        from 'react-dom/server'
 import { trigger }               from 'redial'
 
 import configureStore            from '../shared/configureStore'
-import { BACKEND_API_HOST,
-         SENTRY_PUBLIC_DSN, 
-         SENTRY_PRIVATE_DSN }     from '../shared/configuration'
+import { SENTRY_PUBLIC_DSN,
+         SENTRY_PRIVATE_DSN,
+         BACKEND_API_HOST,
+         FRONTEND_API_HOST }     from '../shared/configuration'
 
 import express                   from 'express'
 import proxy                     from 'http-proxy-middleware'
@@ -42,6 +43,9 @@ const template = (preloadedState, html) => {
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <title>mxsh</title>
+        <script>
+          window.CONFIG = ${JSON.stringify(CONFIG)}
+        </script>
         <script src="https://cdn.ravenjs.com/3.10.0/raven.min.js" crossorigin="anonymous"></script>
         <script>Raven.config('${SENTRY_PUBLIC_DSN}').install();</script>
         <script>
