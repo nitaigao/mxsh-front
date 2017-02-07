@@ -37,14 +37,14 @@ module.exports = {
       { from: path.join(__dirname, 'src', 'static') }
     ]),
     new webpack.DefinePlugin({
-      __DEV__:  JSON.stringify(DEVELOPMENT),
-      __PROD__: JSON.stringify(PRODUCTION),
+      __DEV__:               JSON.stringify(DEVELOPMENT),
+      __PROD__:              JSON.stringify(PRODUCTION),
+      __API_HOST__:          JSON.stringify(process.env.API_HOST),
+      __FRONTEND_HOST__:     JSON.stringify(process.env.FRONTEND_HOST),
+      __RAVEN_PUBLIC_DSN__:  JSON.stringify(process.env.RAVEN_PUBLIC_DSN),
+      __RAVEN_PRIVATE_DSN__: JSON.stringify(process.env.RAVEN_PRIVATE_DSN),
       'process.env': {
-        NODE_ENV:          JSON.stringify(process.env.NODE_ENV),
-        API_HOST:          JSON.stringify(process.env.API_HOST),
-        FRONTEND_HOST:     JSON.stringify(process.env.FRONTEND_HOST),
-        RAVEN_PUBLIC_DSN:  JSON.stringify(process.env.RAVEN_PUBLIC_DSN),
-        RAVEN_PRIVATE_DSN: JSON.stringify(process.env.RAVEN_PRIVATE_DSN)
+        NODE_ENV:            JSON.stringify(process.env.NODE_ENV),
       }
     })
   ]

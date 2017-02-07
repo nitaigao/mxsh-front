@@ -5,7 +5,8 @@ import { renderToString }        from 'react-dom/server'
 import { trigger }               from 'redial'
 
 import configureStore            from '../shared/configureStore'
-import { RAVEN_PUBLIC_DSN, 
+import { BACKEND_API_HOST,
+         RAVEN_PUBLIC_DSN, 
          RAVEN_PRIVATE_DSN }     from '../shared/configuration'
 
 import express                   from 'express'
@@ -26,8 +27,7 @@ app.use(Raven.requestHandler(RAVEN_PRIVATE_DSN));
 app.use(cookieParser())
 app.use(Raven.errorHandler(RAVEN_PRIVATE_DSN))
 
-const API_HOST = process.env.API_HOST || 'http://mxsh.lvh.me:4000'
-app.use('/api', proxy({ target: API_HOST, changeOrigin: true, onError: (err, req, res) => {
+app.use('/api', proxy({ target: BACKEND_API_HOST, changeOrigin: true, onError: (err, req, res) => {
   Raven.captureException(err)
 }}))
 
