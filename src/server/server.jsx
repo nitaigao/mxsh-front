@@ -6,8 +6,8 @@ import { trigger }               from 'redial'
 
 import configureStore            from '../shared/configureStore'
 import { BACKEND_API_HOST,
-         RAVEN_PUBLIC_DSN, 
-         RAVEN_PRIVATE_DSN }     from '../shared/configuration'
+         SENTRY_PUBLIC_DSN, 
+         SENTRY_PRIVATE_DSN }     from '../shared/configuration'
 
 import express                   from 'express'
 import proxy                     from 'http-proxy-middleware'
@@ -21,11 +21,11 @@ import last                      from 'lodash/last'
 
 const app                        = express()
 
-Raven.config(RAVEN_PRIVATE_DSN).install()
+Raven.config(SENTRY_PRIVATE_DSN).install()
 
-app.use(Raven.requestHandler(RAVEN_PRIVATE_DSN));
+app.use(Raven.requestHandler(SENTRY_PRIVATE_DSN));
 app.use(cookieParser())
-app.use(Raven.errorHandler(RAVEN_PRIVATE_DSN))
+app.use(Raven.errorHandler(SENTRY_PRIVATE_DSN))
 
 app.use('/api', proxy({ target: BACKEND_API_HOST, changeOrigin: true, onError: (err, req, res) => {
   Raven.captureException(err)
@@ -43,7 +43,7 @@ const template = (preloadedState, html) => {
         <meta name="apple-mobile-web-app-capable" content="yes">
         <title>mxsh</title>
         <script src="https://cdn.ravenjs.com/3.10.0/raven.min.js" crossorigin="anonymous"></script>
-        <script>Raven.config('${RAVEN_PUBLIC_DSN}').install();</script>
+        <script>Raven.config('${SENTRY_PUBLIC_DSN}').install();</script>
         <script>
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
