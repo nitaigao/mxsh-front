@@ -24,6 +24,12 @@ const app                        = express()
 
 if (__PROD__) {
   Raven.config(SENTRY_PRIVATE_DSN).install()
+
+  app.get('*', (req, res) => {
+    if (req.protocol === 'http') {
+      res.redirect(process.env.FRONTEND_HOST)
+    }
+  })
 }
 
 app.use(Raven.requestHandler(SENTRY_PRIVATE_DSN));
