@@ -8,9 +8,21 @@ global.CONFIG = {
   SENTRY_PRIVATE_DSN: process.env.SENTRY_PRIVATE_DSN
 }
 
-const server = require('./server')
+const app = require('./server').default
 
-const PORT = process.env.PORT || 3000
+const https = require('https')
+const http  = require('http')
 
-server.default.listen(PORT, () =>
-  console.log('Listening on port', PORT)) // eslint-disable-line no-console
+const options = {
+  key: process.env.SSL_KEY,
+  cert: process.env.SSL_CERT
+}
+
+const HTTP_PORT  = process.env.HTTP_PORT || 3000
+const HTTPS_PORT = process.env.HTTPS_PORT || 3443
+
+http.createServer(app).listen(HTTP_PORT, () =>
+  console.log('HTTP Listening on port', HTTP_PORT)) // eslint-disable-line no-console
+
+https.createServer(options, app).listen(HTTPS_PORT, () =>
+  console.log('HTTPS Listening on port', HTTPS_PORT)) // eslint-disable-line no-console
