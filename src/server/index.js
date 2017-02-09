@@ -10,19 +10,7 @@ global.CONFIG = {
 
 const app = require('./server').default
 
-const https = require('https')
-const http  = require('http')
+const PORT  = process.env.PORT || 3000
 
-const options = {
-  key: process.env.SSL_KEY.replace(/\\n/g, '\n'),
-  cert: process.env.SSL_CERT.replace(/\\n/g, '\n')
-}
-
-const HTTP_PORT  = process.env.HTTP_PORT || 3000
-const HTTPS_PORT = process.env.HTTPS_PORT || 3443
-
-http.createServer(app).listen(HTTP_PORT, () =>
-  console.log('HTTP Listening on port', HTTP_PORT)) // eslint-disable-line no-console
-
-https.createServer(options, app).listen(HTTPS_PORT, () =>
-  console.log('HTTPS Listening on port', HTTPS_PORT)) // eslint-disable-line no-console
+app.listen(PORT, () =>
+  console.log('Listening on port', PORT)) // eslint-disable-line no-console
