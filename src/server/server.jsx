@@ -44,7 +44,7 @@ const template = (preloadedState, html) => {
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="apple-mobile-web-app-capable" content="yes">
-        <title>mxsh</title>
+        <title>Mail Shield</title>
         <script>
           window.CONFIG = ${JSON.stringify(CONFIG)}
         </script>
