@@ -14,8 +14,8 @@ const https = require('https')
 const http  = require('http')
 
 const options = {
-  key: process.env.SSL_KEY,
-  cert: process.env.SSL_CERT
+  key: process.env.SSL_KEY.replace(/\\n/g, '\n'),
+  cert: process.env.SSL_CERT.replace(/\\n/g, '\n')
 }
 
 const HTTP_PORT  = process.env.HTTP_PORT || 3000
