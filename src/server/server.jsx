@@ -22,7 +22,9 @@ import last                      from 'lodash/last'
 
 const app                        = express()
 
-Raven.config(SENTRY_PRIVATE_DSN).install()
+if (__PROD__) {
+  Raven.config(SENTRY_PRIVATE_DSN).install()
+}
 
 app.use(Raven.requestHandler(SENTRY_PRIVATE_DSN));
 app.use(cookieParser())
