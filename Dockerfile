@@ -26,4 +26,5 @@ SENTRY_PRIVATE_DSN=https://152e61414974418995a7dd86ab45a8cb:cb5c99929d644282aa51
 yarn compile
 
 EXPOSE 3000
+EXPOSE 3443
 CMD [ "yarn", "start" ]
