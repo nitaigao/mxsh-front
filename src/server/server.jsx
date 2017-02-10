@@ -11,6 +11,7 @@ import { SENTRY_PUBLIC_DSN,
          FRONTEND_API_HOST }     from '../shared/configuration'
 
 import express                   from 'express'
+import morgan                    from 'morgan'
 import proxy                     from 'http-proxy-middleware'
 import cookies                   from 'react-cookie'
 import cookieParser              from 'cookie-parser'
@@ -26,6 +27,7 @@ if (__PROD__) {
   Raven.config(SENTRY_PRIVATE_DSN).install()
 }
 
+app.use(morgan('combined'))
 app.use(Raven.requestHandler(SENTRY_PRIVATE_DSN));
 app.use(cookieParser())
 app.use(Raven.errorHandler(SENTRY_PRIVATE_DSN))
