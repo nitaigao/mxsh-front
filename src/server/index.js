@@ -19,7 +19,6 @@ http.createServer(app).listen(HTTP_PORT, () =>
   console.log('HTTP Listening on port', HTTP_PORT)) // eslint-disable-line no-console
 
 if (process.env.NODE_ENV === 'production') {
-
   const options = {
     key: process.env.SSL_KEY.replace(/\\n/g, '\n'),
     cert: process.env.SSL_CERT.replace(/\\n/g, '\n')
