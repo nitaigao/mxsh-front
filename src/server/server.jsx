@@ -127,8 +127,8 @@ app.use((req, res) => {
       }
     }
     
-    console.log(req.cookies.auth)
-    
+    console.log('server', req.cookies.auth)
+
     const { store, rootTask } = configureStore(null, preloadedState)
 
     const { dispatch, getState } = store
@@ -156,7 +156,10 @@ app.use((req, res) => {
       )
       const HTML = template(state, html)
       res.end(HTML)
-    }).catch(err => Raven.captureException(err))
+    }).catch(err => {
+      Raven.captureException(err)
+      res.status(500).send({ error: 'An error has occurred' })
+    })
   })
 })
 
