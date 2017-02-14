@@ -5,7 +5,7 @@ const nodeExternals = require('webpack-node-externals')
 const PRODUCTION  = process.env.NODE_ENV === 'production'
 const DEVELOPMENT = process.env.NODE_ENV === undefined || process.env.NODE_ENV === 'development'
 
-module.exports = {
+const config = {
   entry:  './src/server/index.js',
   output: {
     path:     path.join(__dirname, 'dist'),
@@ -24,7 +24,7 @@ module.exports = {
         test:    /\.jsx?$/,
         exclude: /node_modules/,
         loaders: ['babel-loader']
-      }
+      },
     ]
   },
   resolve: {
@@ -37,6 +37,18 @@ module.exports = {
     new webpack.DefinePlugin({
       __DEV__:               JSON.stringify(DEVELOPMENT),
       __PROD__:              JSON.stringify(PRODUCTION)
-    })
+    }),
   ]
-};
+}
+
+if (PRODUCTION) {
+  config.plugins.push(
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+          warnings: false
+      }
+    })
+  )
+}
+
+module.exports = config

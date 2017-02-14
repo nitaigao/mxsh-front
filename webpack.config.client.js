@@ -6,7 +6,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const PRODUCTION  = process.env.NODE_ENV === 'production'
 const DEVELOPMENT = process.env.NODE_ENV === undefined || process.env.NODE_ENV === 'development'
 
-module.exports = {
+const config = {
   entry:  ['babel-polyfill', './src/client/index.jsx'],
   output: {
     path:     path.join(__dirname, 'dist'),
@@ -42,3 +42,15 @@ module.exports = {
     })
   ]
 }
+
+if (PRODUCTION) {
+  config.plugins.push(
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+          warnings: false
+      }
+    })
+  )
+}
+
+module.exports = config
