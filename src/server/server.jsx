@@ -37,6 +37,10 @@ app.use('/api', proxy({ target: BACKEND_API_HOST, changeOrigin: true, onError: (
   Raven.captureException(err)
 }}))
 
+app.use('/health', (req, res) => {
+  res.send(200)
+})
+
 app.use(express.static('dist'))
 
 const template = (state, html) => {
