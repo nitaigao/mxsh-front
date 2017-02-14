@@ -131,8 +131,6 @@ app.use((req, res) => {
       }
     }
     
-    console.log('server', req.cookies.auth)
-
     const { store, rootTask } = configureStore(null, preloadedState)
 
     const { dispatch, getState } = store

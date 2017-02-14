@@ -11,7 +11,6 @@ export function post(resource, params = {}) {
     console.log('[POST]', '->', resourcePath, jsonParams) // eslint-disable-line no-console
   }
   const authCookie = cookies.load('auth')
-  console.log('api', authCookie)
   return fetch(resourcePath, {
     method: 'POST',
     headers: { ...HEADERS,
@@ -28,7 +27,6 @@ export function get(resource) {
     console.log('[GET]', '->', resourcePath) // eslint-disable-line no-console
   }
   const authCookie = cookies.load('auth')
-  console.log('api', authCookie)
   return fetch(resourcePath, {
     method: 'GET',
     headers: { ...HEADERS,
