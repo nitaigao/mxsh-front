@@ -8,6 +8,8 @@ global.CONFIG = {
   SENTRY_PRIVATE_DSN: process.env.SENTRY_PRIVATE_DSN
 }
 
+console.log(global.CONFIG)
+
 const app = require('./server').default
 
 const http  = require('http')
