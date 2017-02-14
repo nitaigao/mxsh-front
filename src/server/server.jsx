@@ -41,7 +41,7 @@ app.use('/health', (req, res) => {
   res.send(200)
 })
 
-app.use(express.static('dist'))
+app.use(express.static('dist', { maxage: 60 }))
 
 const template = (state, html) => {
   const preloadedState = `
