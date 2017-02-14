@@ -1,5 +1,6 @@
 const path    = require('path')
 const webpack = require('webpack')
+const AssetsPlugin = require('assets-webpack-plugin')
 
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
@@ -10,7 +11,7 @@ const config = {
   entry:  ['babel-polyfill', './src/client/index.jsx'],
   output: {
     path:     path.join(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: '[name]-[chunkhash].js'
   },
   module: {
     rules: [
@@ -39,6 +40,10 @@ const config = {
     new webpack.DefinePlugin({
       __DEV__:                JSON.stringify(DEVELOPMENT),
       __PROD__:               JSON.stringify(PRODUCTION)
+    }),
+    new AssetsPlugin({
+      filename: 'assets.json',
+      path: path.resolve(__dirname, './dist')
     })
   ]
 }

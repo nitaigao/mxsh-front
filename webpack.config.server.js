@@ -1,6 +1,7 @@
 const path          = require('path')
 const webpack       = require('webpack')
 const nodeExternals = require('webpack-node-externals')
+const AssetsPlugin  = require('assets-webpack-plugin')
 
 const PRODUCTION  = process.env.NODE_ENV === 'production'
 const DEVELOPMENT = process.env.NODE_ENV === undefined || process.env.NODE_ENV === 'development'

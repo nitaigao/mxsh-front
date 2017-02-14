@@ -5,6 +5,8 @@ import { RouterContext, match }  from 'react-router'
 import { renderToString }        from 'react-dom/server'
 import { trigger }               from 'redial'
 
+import assets                    from '../../dist/assets'
+
 import configureStore            from '../shared/configureStore'
 import { SENTRY_PUBLIC_DSN,
          SENTRY_PRIVATE_DSN,
@@ -41,7 +43,7 @@ app.use('/health', (req, res) => {
   res.send(200)
 })
 
-app.use(express.static('dist', { maxage: 60 }))
+app.use(express.static('dist', { maxage: '1d' }))
 
 const template = (state, html) => {
   const preloadedState = `
@@ -97,7 +99,7 @@ const template = (state, html) => {
       <body>
         <div id="react-view">${html || ''}</div>
         ${preloadedState || ''}
-        <script type="application/javascript" src="/bundle.js"></script>
+        <script type="application/javascript" src="/${assets.main.js}"></script>
       </body>
     </html>`
 }
