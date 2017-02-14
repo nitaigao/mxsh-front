@@ -39,7 +39,6 @@ class LatestIdentity extends Component {
 class Identities extends Component {
   render () {
     const { identities: { latest, existing } } = this.props
-    existing.reverse()
     return (
       <div id='identities'>
         <div>
