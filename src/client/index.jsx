@@ -11,9 +11,9 @@ import configureStore                     from '../shared/configureStore'
 const history = createHistory()
 
 const preloadedState = window.__PRELOADED_STATE__
-const store = configureStore(history, preloadedState)
+const { store } = configureStore(history, preloadedState)
 
-const { dispatch } = store
+const { dispatch, getState } = store
 
 function renderLocation(location) {
   match({ routes, location }, (error, redirectLocation, renderProps) => {
@@ -21,13 +21,14 @@ function renderLocation(location) {
       path: renderProps.location.pathname,
       query: renderProps.location.query,
       params: renderProps.params,
+      state: getState(),
       dispatch
     }
 
     const { components } = renderProps
 
-    if (window.INITIAL_STATE) {
-      delete window.INITIAL_STATE
+    if (window.__PRELOADED_STATE__) {
+      delete window.__PRELOADED_STATE__
     } else {
       trigger('fetch', components, locals)
     }

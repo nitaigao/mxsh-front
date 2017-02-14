@@ -7,7 +7,7 @@ import CopyToClipboard          from 'react-copy-to-clipboard';
 
 import { identities }           from  '../selectors'
 
-import { mine, createIdentity } from  '../modules/identities'
+import { createIdentity } from  '../modules/identities'
 
 const mapStateToProps = (state) => ({
   identities: identities(state)
@@ -37,11 +37,6 @@ class LatestIdentity extends Component {
 }
 
 class Identities extends Component {
-  componentWillMount() {
-    const { mine, dispatch } = this.props
-    mine()
-  }
-
   render () {
     const { identities: { latest, existing } } = this.props
     existing.reverse()
@@ -76,4 +71,4 @@ Identities.propTypes = {
   identities: React.PropTypes.object.isRequired
 }
 
-export default connect(mapStateToProps, { createIdentity, mine })(Identities)
+export default connect(mapStateToProps, { createIdentity })(Identities)

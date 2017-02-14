@@ -1,5 +1,6 @@
 import React                     from 'react'
 import { Provider }              from 'react-redux'
+import { END }                   from 'redux-saga'
 import { RouterContext, match }  from 'react-router'
 import { renderToString }        from 'react-dom/server'
 import { trigger }               from 'redial'
@@ -38,7 +39,11 @@ app.use('/api', proxy({ target: BACKEND_API_HOST, changeOrigin: true, onError: (
 
 app.use(express.static('dist'))
 
-const template = (preloadedState, html) => {
+const template = (state, html) => {
+  const preloadedState = `
+    <script>
+       window.__PRELOADED_STATE__ = ${JSON.stringify(state)}
+    </script>`
   return `
     <!DOCTYPE html>
     <html>
@@ -120,7 +125,7 @@ app.use((req, res) => {
       }
     }
     
-    const store = configureStore(null, preloadedState)
+    const { store, rootTask } = configureStore(null, preloadedState)
 
     const { dispatch, getState } = store
 
@@ -128,24 +133,25 @@ app.use((req, res) => {
       path: renderProps.location.pathname,
       query: renderProps.location.query,
       params: renderProps.params,
+      state: getState(),
       dispatch
     }
 
     const { components } = renderProps
 
     trigger('fetch', components, locals)
-      .then(() => {
-        const html = renderToString(
-          <Provider store={store}>
-            <RouterContext {...renderProps} />
-          </Provider>
-        )
-        const state = `
-          <script>
-             window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}
-          </script>`
-        const HTML = template(state, html)
-        res.end(HTML)
+
+    store.dispatch(END)
+    
+    rootTask.done.then(() => {
+      const state = getState()
+      const html = renderToString(
+        <Provider store={store}>
+          <RouterContext {...renderProps} />
+        </Provider>
+      )
+      const HTML = template(state, html)
+      res.end(HTML)
       }).catch(err => Raven.captureException(err))
   })
 })

@@ -18,7 +18,7 @@ export default function configureStore(history, preloadedState) {
 
   const store = createStore(reducers, preloadedState, composeEnhancers(middleWare))
 
-  sagas.forEach(saga => sagaMiddleware.run(saga))
+  const rootTask = sagaMiddleware.run(sagas)
 
-  return store
+  return { store, rootTask }
 }

@@ -13,6 +13,14 @@ const mapStateToProps = state => ({
   loggedIn: state.authentication.loggedIn
 })
 
+const hooks = {
+  fetch: ({ dispatch, params: { id }, state }) => {
+    if (state.authentication.loggedIn) {
+      return dispatch(mine())
+    }
+  }
+}
+
 class Home extends Component {
   onLogin = (values) => {
     const { login } = this.props
@@ -40,4 +48,5 @@ Home.propTypes = {
   login: React.PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, { login })(Home)
+const HomeWithHooks = provideHooks(hooks)(Home)
+export default connect(mapStateToProps, { login })(HomeWithHooks)
