@@ -119,6 +119,8 @@ app.use((req, res) => {
       return
     } 
 
+    res.set('Cache-Control', 'private, max-age=0, must-revalidate')
+
     const preloadedState = {
       authentication: {
         loggedIn: req.cookies.auth != null
