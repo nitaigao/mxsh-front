@@ -28,9 +28,18 @@ import last                      from 'lodash/last'
 
 const app                        = express()
 
+const forceSSL = (req, res, next) => {
+  if(!req.secure) {
+    const secureUrl = "https://" + req.headers['host'] + req.url 
+    res.writeHead(301, { "Location":  secureUrl })
+    res.end()
+  }
+  next()
+}
+
 if (__PROD__) {
   Raven.config(SENTRY_PRIVATE_DSN).install()
-  app.use(enforce.HTTPS())
+  app.use(forceSSL)
 }
 
 app.use(morgan('combined'))
