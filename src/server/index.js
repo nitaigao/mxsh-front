@@ -8,7 +8,7 @@ global.CONFIG = {
   SENTRY_PRIVATE_DSN: process.env.SENTRY_PRIVATE_DSN
 }
 
-console.log(global.CONFIG)
+console.log(global.CONFIG) // eslint-disable-line no-console
 
 const app = require('./server').default
 

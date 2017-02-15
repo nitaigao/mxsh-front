@@ -27,6 +27,7 @@
     "cookie-parser": "^1.4.3",
     "email-addresses": "^2.0.2",
     "express": "^4.14.0",
+    "express-sslify": "^1.2.0",
     "fs": "^0.0.1-security",
     "history": "^3.2.0",
     "http-proxy-middleware": "^0.17.3",

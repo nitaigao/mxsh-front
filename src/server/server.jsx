@@ -8,6 +8,7 @@ import { trigger }               from 'redial'
 import assets                    from '../../dist/assets'
 
 import configureStore            from '../shared/configureStore'
+
 import { SENTRY_PUBLIC_DSN,
          SENTRY_PRIVATE_DSN,
          BACKEND_API_HOST,
@@ -19,6 +20,7 @@ import proxy                     from 'http-proxy-middleware'
 import cookies                   from 'react-cookie'
 import cookieParser              from 'cookie-parser'
 import Raven                     from 'raven'
+import enforce                   from 'express-sslify'
 
 import path                      from 'path'
 import chokidar                  from 'chokidar'
@@ -28,10 +30,11 @@ const app                        = express()
 
 if (__PROD__) {
   Raven.config(SENTRY_PRIVATE_DSN).install()
+  app.use(enforce.HTTPS())
 }
 
 app.use(morgan('combined'))
-app.use(Raven.requestHandler(SENTRY_PRIVATE_DSN));
+app.use(Raven.requestHandler(SENTRY_PRIVATE_DSN))
 app.use(cookieParser())
 app.use(Raven.errorHandler(SENTRY_PRIVATE_DSN))
 
