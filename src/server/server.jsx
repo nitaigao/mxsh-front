@@ -162,6 +162,7 @@ app.use((req, res) => {
       res.end(HTML)
     }).catch(err => {
       Raven.captureException(err)
+      res.clearCookie('auth')
       res.status(500).send({ error: 'An error has occurred' })
     })
   })
