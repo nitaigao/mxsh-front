@@ -39,7 +39,7 @@ const forceSSL = (req, res, next) => {
 
 if (__PROD__) {
   Raven.config(SENTRY_PRIVATE_DSN).install()
-  app.use(forceSSL)
+  // app.use(forceSSL)
 }
 
 app.use(morgan('combined'))
