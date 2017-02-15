@@ -39,10 +39,6 @@ app.use('/api', proxy({ target: BACKEND_API_HOST, changeOrigin: true, onError: (
   Raven.captureException(err)
 }}))
 
-app.use('/health', (req, res) => {
-  res.send(200)
-})
-
 app.use(express.static('dist', { maxage: '1d' }))
 
 const template = (state, html) => {
@@ -163,7 +159,7 @@ app.use((req, res) => {
     }).catch(err => {
       Raven.captureException(err)
       res.clearCookie('auth')
-      res.status(500).send({ error: 'An error has occurred' })
+      res.redirect(500, '/')
     })
   })
 })
