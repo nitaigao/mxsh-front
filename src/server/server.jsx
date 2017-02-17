@@ -179,8 +179,8 @@ app.use((req, res) => {
       const HTML = template(state, html)
       res.end(HTML)
     }).catch(err => {
-      // Raven.captureException(err)
-      // res.clearCookie('auth')
+      Raven.captureException(err)
+      res.clearCookie('auth')
       res.redirect(500, '/')
     })
   })
