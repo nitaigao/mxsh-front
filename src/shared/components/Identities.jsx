@@ -3,6 +3,7 @@ import { Link }                 from 'react-router'
 import { connect }              from 'react-redux'
 import { first }                from 'lodash/first'
 import styles                   from './Identities.css'
+import classNames               from 'classnames'
 
 import CopyToClipboard          from 'react-copy-to-clipboard';
 
@@ -41,27 +42,30 @@ class Identities extends Component {
   render () {
     const { identities: { latest, existing } } = this.props
     return (
-      <div>
-        <div>
+      <div className={styles.identities}>
+        <div className={styles.newIdentity}>
           <h3>
             New Identity
             <button onClick={this.handleNewClick}>Create Identity</button>
           </h3>
           {latest && <LatestIdentity value={latest.email} />}
         </div>
-        <div className={styles.identities}>
-          <h3>Identities</h3>
-          <ul>
-            {existing.map((identity, i) => {
-              return (
-                <li key={i}>
-                  <div>{identity.email}</div>
-                  <div>{identity.received}</div>
-                </li>
-              )
-            })}
-          </ul>
-        </div>
+        {existing.length > 0 &&
+          <div className={styles.existing}>
+            <ul>
+              {existing.map((identity, i) => {
+                return (
+                  <li key={i} className={styles.card}>
+                    <div className={styles.identity}>
+                      <div className={styles.heading}>{identity.email}</div>
+                      <div className={styles.body}>{identity.received}</div>
+                    </div>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        }
       </div>
     )
   }

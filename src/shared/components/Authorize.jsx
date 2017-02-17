@@ -6,7 +6,7 @@ import { provideHooks }        from 'redial'
 import { authorize }           from  '../modules/authentication'
 
 const hooks = {
-  fetch: ({ dispatch, params }) => dispatch(authorize(params))
+  defer: ({ dispatch, params }) => dispatch(authorize(params))
 }
 
 const Authorize = () => (

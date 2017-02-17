@@ -12,6 +12,7 @@ import { SENTRY_PUBLIC_DSN,
          BACKEND_API_HOST,
          FRONTEND_API_HOST }     from '../shared/configuration'
 
+import fs                        from 'fs'
 import express                   from 'express'
 import morgan                    from 'morgan'
 import proxy                     from 'http-proxy-middleware'
@@ -63,8 +64,7 @@ app.use('/api', proxy({ target: BACKEND_API_HOST, changeOrigin: true, onError: (
 app.use(express.static('dist', { maxage: '1d' }))
 
 const template = (state, html) => {
-  const assets =  require('../../dist/assets')
-  console.log(assets)
+  let assets = JSON.parse(fs.readFileSync('dist/assets.json'))      
   const preloadedState = `
     <script>
        window.__PRELOADED_STATE__ = ${JSON.stringify(state)}
@@ -117,6 +117,7 @@ const template = (state, html) => {
         <div id="react-view">${html || ''}</div>
         ${preloadedState || ''}
         <script type="application/javascript" src="/${assets.main.js}"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
         <link rel="stylesheet" type="text/css" href="/${assets.main.css}">
       </body>
     </html>`
@@ -135,22 +136,22 @@ app.use((req, res) => {
 
     if (!renderProps) return res.status(404).end('Not found.')
 
-    const isSSR = last(renderProps.routes).ssr
-
-    if (!isSSR) {
-      const HTML = template()
-      res.end(HTML)
-      return
-    } 
-
-    res.set('Cache-Control', 'private, max-age=0, must-revalidate')
-
     const preloadedState = {
       authentication: {
         loggedIn: req.cookies.auth != null
       }
     }
     
+    const isSSR = last(renderProps.routes).ssr
+
+    if (!isSSR) {
+      const HTML = template(preloadedState)
+      res.end(HTML)
+      return
+    } 
+
+    res.set('Cache-Control', 'private, max-age=0, must-revalidate')
+
     const { store, rootTask } = configureStore(null, preloadedState)
 
     const { dispatch, getState } = store
@@ -179,6 +180,7 @@ app.use((req, res) => {
       const HTML = template(state, html)
       res.end(HTML)
     }).catch(err => {
+      console.error(err)
       Raven.captureException(err)
       res.clearCookie('auth')
       res.redirect(500, '/')
