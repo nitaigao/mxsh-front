@@ -2,6 +2,7 @@ import React, { Component }     from 'react'
 import { Link }                 from 'react-router'
 import { connect }              from 'react-redux'
 import { first }                from 'lodash/first'
+import styles                   from './Identities.css'
 
 import CopyToClipboard          from 'react-copy-to-clipboard';
 
@@ -40,7 +41,7 @@ class Identities extends Component {
   render () {
     const { identities: { latest, existing } } = this.props
     return (
-      <div id='identities'>
+      <div>
         <div>
           <h3>
             New Identity
@@ -48,11 +49,16 @@ class Identities extends Component {
           </h3>
           {latest && <LatestIdentity value={latest.email} />}
         </div>
-        <div>
+        <div className={styles.identities}>
           <h3>Identities</h3>
           <ul>
             {existing.map((identity, i) => {
-              return (<li key={i}>{identity.email}</li>)
+              return (
+                <li key={i}>
+                  <div>{identity.email}</div>
+                  <div>{identity.received}</div>
+                </li>
+              )
             })}
           </ul>
         </div>

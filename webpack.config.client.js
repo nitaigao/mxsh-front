@@ -1,6 +1,7 @@
 const path    = require('path')
 const webpack = require('webpack')
 const AssetsPlugin = require('assets-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
@@ -25,6 +26,17 @@ const config = {
         test:    /\.jsx?$/,
         exclude: /node_modules/,
         loaders: ['babel-loader']
+      },
+      {
+        test: /\.css$/,
+        exclude: /dist/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            { loader: 'css-loader', query: { modules: true, sourceMaps: false } },
+            { loader: 'postcss-loader'  }
+          ]
+        })
       }
     ]
   },
@@ -41,6 +53,7 @@ const config = {
       __DEV__:                JSON.stringify(DEVELOPMENT),
       __PROD__:               JSON.stringify(PRODUCTION)
     }),
+    new ExtractTextPlugin('[name]-[chunkhash].css'),
     new AssetsPlugin({
       filename: 'assets.json',
       path: path.resolve(__dirname, './dist')

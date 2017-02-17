@@ -14,7 +14,7 @@ const mapStateToProps = state => ({
 })
 
 const hooks = {
-  fetch: ({ dispatch, params: { id }, state }) => {
+  defer: ({ dispatch, params: { id }, state }) => {
     if (state.authentication.loggedIn) {
       return dispatch(mine())
     }

@@ -5,8 +5,6 @@ import { RouterContext, match }  from 'react-router'
 import { renderToString }        from 'react-dom/server'
 import { trigger }               from 'redial'
 
-import assets                    from '../../dist/assets'
-
 import configureStore            from '../shared/configureStore'
 
 import { SENTRY_PUBLIC_DSN,
@@ -37,9 +35,20 @@ const forceSSL = (req, res, next) => {
   next()
 }
 
+if (__DEV__) {
+  const watcher = chokidar.watch('./src/shared')
+  watcher.on('ready', () => {
+    watcher.on('all', () => {
+      console.log("Clearing /shared/ module cache from server")
+      Object.keys(require.cache).forEach(function(id) {
+        if (/[\/\\]shared[\/\\]/.test(id)) delete require.cache[id]
+      })
+    })
+  })
+}
+
 if (__PROD__) {
   Raven.config(SENTRY_PRIVATE_DSN).install()
-  // app.use(forceSSL)
 }
 
 app.use(morgan('combined'))
@@ -54,6 +63,8 @@ app.use('/api', proxy({ target: BACKEND_API_HOST, changeOrigin: true, onError: (
 app.use(express.static('dist', { maxage: '1d' }))
 
 const template = (state, html) => {
+  const assets =  require('../../dist/assets')
+  console.log(assets)
   const preloadedState = `
     <script>
        window.__PRELOADED_STATE__ = ${JSON.stringify(state)}
@@ -70,8 +81,6 @@ const template = (state, html) => {
         <script>
           window.CONFIG = ${JSON.stringify(CONFIG)}
         </script>
-        <script src="https://cdn.ravenjs.com/3.10.0/raven.min.js" crossorigin="anonymous"></script>
-        <script>Raven.config('${SENTRY_PUBLIC_DSN}').install();</script>
         <script>
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -108,6 +117,7 @@ const template = (state, html) => {
         <div id="react-view">${html || ''}</div>
         ${preloadedState || ''}
         <script type="application/javascript" src="/${assets.main.js}"></script>
+        <link rel="stylesheet" type="text/css" href="/${assets.main.css}">
       </body>
     </html>`
 }
@@ -169,8 +179,8 @@ app.use((req, res) => {
       const HTML = template(state, html)
       res.end(HTML)
     }).catch(err => {
-      Raven.captureException(err)
-      res.clearCookie('auth')
+      // Raven.captureException(err)
+      // res.clearCookie('auth')
       res.redirect(500, '/')
     })
   })
