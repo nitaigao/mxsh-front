@@ -112,7 +112,7 @@ const template = (state, html) => {
         <link rel="manifest" href="/manifest.json">
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
         <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900|Pacifico" rel="stylesheet"> 
-        <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" type="text/css" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
         <meta name="theme-color" content="#ffffff">
       </head>
       <body>
