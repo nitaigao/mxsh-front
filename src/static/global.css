@@ -1,7 +1,6 @@
 body {
   font-family: 'Lato', sans-serif;
-  /*background-color: #28ABE3;*/
-  background-color: #324853;
+  background-color: #ECF0F1;
   color: white;
 }
 
@@ -16,10 +15,12 @@ input[type="password"] {
   padding: 6px 10px;
   margin: 5px 0;
   line-height: 24px;
-  border: 1px solid #e4e4e4;
+  border: 1px solid #333;
+  width: 100%;
+  border-radius: 3px;
 }
 
-button, input[type="submit"], input[type="reset"], input[type="button"] {
+.button, button, input[type="submit"], input[type="reset"], input[type="button"] {
   padding: 10px 20px;
   margin: 5px 0;
   display: block;
@@ -28,6 +29,16 @@ button, input[type="submit"], input[type="reset"], input[type="button"] {
   background-color: #19A6EC;
   color: white;
   width: 100%;
+  border-radius: 1px;
+  text-transform: uppercase;
+}
+
+.success, .proceed {
+  background-color: #27B779;
+}
+
+.success:hover, .proceed:hover {
+  background-color: #25A068;
 }
 
 *, *::before, *::after {
@@ -36,7 +47,7 @@ button, input[type="submit"], input[type="reset"], input[type="button"] {
 
 .field-error {
   text-align: left;
-  color: red;
+  color: #E74C3C;
 }
 
 a {
@@ -44,19 +55,8 @@ a {
   text-decoration: none;
 }
 
-a:hover {
-  color: #C26458;
-  text-decoration: underline;
-}
-
-a:active {
-  color: #C26458;
-  text-decoration: none;
-}
-
-a:visited {
-  color: #C26458;
-  text-decoration: none;
+h1, h2, h3, h4, h5 {
+  color: #fff;
 }
 
 ul {
@@ -64,21 +64,6 @@ ul {
   padding: 0;
 }
 
-.container {
-  width: 100%;
-  box-sizing: border-box;
-  margin-right: auto;
-  margin-left: auto;
-  padding-left: 15px;
-  padding-right: 15px;
-}
-
-.row {
-  margin: 0px -10px;
-  &:before, 
-  &:after {
-    content:"";
-    display: table;
-    clear: both;
-  }
+.field-group {
+  margin-bottom: 10px;
 }

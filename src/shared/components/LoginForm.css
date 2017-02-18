@@ -1,7 +1,7 @@
 @import "./grid.css";
 @import "./colors.css";
 
-.loginForm {
+/*.loginForm {
   @mixin col_6
 }
 
@@ -59,4 +59,49 @@
 .mailLink {
   margin-top: 30px;
   color: #C26458;
+}*/
+
+.fields {
+  padding-top: 20px;
+  border-top: 1px solid #333;
+}
+
+@define-mixin vertical-align {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translateY(-50%) translateX(-50%);
+  transform: translateY(-50%) translateX(-50%);
+}
+
+.checkMail {
+  text-align: center;
+  max-width: 350px;
+  margin: 60px auto;
+  padding: 40px 40px 30px 40px;
+  background-color: #324853;
+  border-radius: 5px;
+  @media (max-width: 250px) { display: none; }
+}
+
+.form {
+  text-align: center;
+  max-width: 350px;
+  margin: 60px auto;
+  padding: 40px 40px 30px 40px;
+  background-color: #324853;
+  border-radius: 5px;
+  @media (max-width: 250px) { display: none; }
+}
+
+.icon {
+  width: 85%;
+}
+
+.extension {
+  @mixin vertical-align;
+  text-align: center;
+  @media (min-width: 250px) {
+    display: none;
+  }
 }

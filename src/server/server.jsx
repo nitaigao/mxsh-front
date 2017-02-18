@@ -73,6 +73,7 @@ const template = (state, html) => {
     <!DOCTYPE html>
     <html>
       <head>
+        <link rel="stylesheet" type="text/css" href="/simple-grid.min.css">
         <link rel="stylesheet" type="text/css" href="/global.css">
         <link rel="stylesheet" type="text/css" href="/${assets.main.css}">
         <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:400"> 

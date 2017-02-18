@@ -1,9 +1,10 @@
-import React                from 'react'
-import { Field, reduxForm } from 'redux-form'
-import addrs                from 'email-addresses'
-import isEmail              from 'validator/lib/isEmail'
-import styles               from './LoginForm.css'
-import classNames           from 'classnames'
+import React                    from 'react'
+import { Field, reduxForm }     from 'redux-form'
+import addrs                    from 'email-addresses'
+import isEmail                  from 'validator/lib/isEmail'
+import styles                   from './LoginForm.css'
+import classNames               from 'classnames'
+import { FRONTEND_HOST }        from '../configuration'
 
 const email = value => 
   value && !isEmail(value) ? 'Invalid email address' : undefined
@@ -11,9 +12,9 @@ const email = value =>
 const required = value => value ? undefined : 'Required'
 
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
-  <div>
+  <div className='field-group'>
     {touched && ((error && <div className='field-error'>{error}</div>) || (warning && <div>{warning}</div>))}
-    <input className={styles.email} {...input} placeholder={label} type={type}/>
+    <input {...input} placeholder={label} type={type}/>
   </div>
 )
 
@@ -33,23 +34,37 @@ class LoginForm extends React.Component {
   render() {
     if (this.state.submitted) {
       return (
-        <div className={styles.checkMail}>
-          <i className={classNames('icon', 'ion-archive', styles.icon)}></i>
-          <p className={styles.checkText}>Please check your <a className={styles.mailLink} target='_blank' href={`http://${this.state.provider}`}>{this.state.provider}</a><br/> mailbox for a sign in link</p>
+        <div className={'container'}>
+          <div className={'row'}>
+            <div className='col-12'>
+              <div className={styles.checkMail}>
+                <i className={classNames('icon', 'ion-archive', styles.icon)}></i>
+                <p className={styles.checkText}>Please check your <a className={styles.mailLink} target='_blank' href={`http://${this.state.provider}`}>{this.state.provider}</a><br/> mailbox for a sign in link</p>
+              </div>
+            </div>
+          </div>
         </div>
       )
     } else {
       const { handleSubmit } = this.props
       return (
-        <div className={styles.loginFormContainer}>
-          <form className={styles.loginForm} onSubmit={handleSubmit(this.onSubmit)}>
-            <img className={styles.brand} src='/icon.svg'></img>
-            <h3>Mail Shield</h3>
-            <div className={styles.card}>
-              <Field name='email' label='Email Address' component={renderField} type='email' validate={[required, email]} />
-              <button className={styles.loginButton} type='submit'>Sign In</button>
+        <div className={'container'}>
+          <div className={'row'}>
+            <div className='col-12'>
+              <div className={styles.extension}>
+                <img src='/icon.svg'></img>
+                <a className='button' target="_blank" href={FRONTEND_HOST}>Login</a>
+              </div>
+              <form className={styles.form} onSubmit={handleSubmit(this.onSubmit)}>
+                <img className={styles.icon} src='/icon.svg'></img>
+                <h3>Mail Shield</h3>
+                <div className={styles.fields}>
+                  <Field name='email' label='Email Address' component={renderField} type='email' validate={[required, email]} />
+                  <button className='proceed' type='submit'>SIGN IN</button>
+                </div>
+              </form>
             </div>
-          </form>
+          </div>
         </div>
       )
     }
