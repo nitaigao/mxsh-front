@@ -76,7 +76,7 @@ const template = (state, html) => {
         <link rel="stylesheet" type="text/css" href="/simple-grid.min.css">
         <link rel="stylesheet" type="text/css" href="/global.css">
         <link rel="stylesheet" type="text/css" href="/${assets.main.css}">
-        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:400"> 
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:400,900"> 
         <link rel="stylesheet" type="text/css" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -89,7 +89,6 @@ const template = (state, html) => {
         <link rel="manifest" href="/manifest.json">
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
         <meta name="theme-color" content="#ffffff">
-        <script async type="application/javascript" src="/${assets.main.js}"></script>
       </head>
       <body>
         <div id="react-view">${html || ''}</div>
@@ -97,6 +96,7 @@ const template = (state, html) => {
         <script>
           window.CONFIG = ${JSON.stringify(CONFIG)}
         </script>
+        <script async type="application/javascript" src="/${assets.main.js}"></script>
         <script>
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

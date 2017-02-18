@@ -58,7 +58,7 @@ class LoginForm extends React.Component {
                 </div>
                 <form className={styles.form} onSubmit={handleSubmit(this.onSubmit)}>
                   <img className={styles.shield} src='/icon.svg'></img>
-                  <h3>Mail Shield</h3>
+                  <h1 className={styles.name}>MAIL SHIELD</h1>
                   <div className={styles.fields}>
                     <Field name='email' label='Email Address' component={renderField} type='email' validate={[required, email]} />
                     <button className='proceed' type='submit'>SIGN IN</button>
