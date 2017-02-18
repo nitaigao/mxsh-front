@@ -34,11 +34,11 @@ class LoginForm extends React.Component {
   render() {
     if (this.state.submitted) {
       return (
-        <div className={'container'}>
-          <div className={'row'}>
+        <div className='container'>
+          <div className='row'>
             <div className='col-12'>
               <div className={styles.checkMail}>
-                <i className={classNames('icon', 'ion-archive', styles.icon)}></i>
+                <i className={classNames('icon', 'ion-archive', styles.mailbox)}></i>
                 <p className={styles.checkText}>Please check your <a className={styles.mailLink} target='_blank' href={`http://${this.state.provider}`}>{this.state.provider}</a><br/> mailbox for a sign in link</p>
               </div>
             </div>
@@ -48,21 +48,23 @@ class LoginForm extends React.Component {
     } else {
       const { handleSubmit } = this.props
       return (
-        <div className={'container'}>
-          <div className={'row'}>
-            <div className='col-12'>
-              <div className={styles.extension}>
-                <img src='/icon.svg'></img>
-                <a className='button' target="_blank" href={FRONTEND_HOST}>Login</a>
-              </div>
-              <form className={styles.form} onSubmit={handleSubmit(this.onSubmit)}>
-                <img className={styles.icon} src='/icon.svg'></img>
-                <h3>Mail Shield</h3>
-                <div className={styles.fields}>
-                  <Field name='email' label='Email Address' component={renderField} type='email' validate={[required, email]} />
-                  <button className='proceed' type='submit'>SIGN IN</button>
+        <div className={styles.page}>
+          <div className={'container'}>
+            <div className={'row'}>
+              <div className='col-12'>
+                <div className={styles.extension}>
+                  <img src='/icon.svg'></img>
+                  <a className='button proceed' target="_blank" href={FRONTEND_HOST}>SIGN IN</a>
                 </div>
-              </form>
+                <form className={styles.form} onSubmit={handleSubmit(this.onSubmit)}>
+                  <img className={styles.shield} src='/icon.svg'></img>
+                  <h3>Mail Shield</h3>
+                  <div className={styles.fields}>
+                    <Field name='email' label='Email Address' component={renderField} type='email' validate={[required, email]} />
+                    <button className='proceed' type='submit'>SIGN IN</button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>

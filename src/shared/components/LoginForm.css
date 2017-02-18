@@ -1,69 +1,29 @@
 @import "./grid.css";
 @import "./colors.css";
 
-/*.loginForm {
-  @mixin col_6
-}
-
-.loginFormContainer {
-  @mixin row;
-  text-align: center;
-  max-width: 400px;
-  margin: 30px auto;
-}
-
-.loginButton {
-  @mixin success;
-  color: white;
-  width: 100%;
-}
-
-.email {
-  width: 100%;
-  margin-bottom: 15px !important;
-}
-
-.brand {
-  max-width: 300px;
-}
-
-.card {
-  border-top: 1px solid #eee;
-  padding-top: 20px;
-  border-radius: 2px;
-}
-
-.icon {
-  display: inline-block;
-  margin-top: 30px;
-  font-size: 72px;
-  padding: 10px;
-  padding-bottom: 0
-}
-
-.checkMail {
-  position: absolute;
-  width: 300px;
-  height: 200px;
-  z-index: 15;
-  top: 50%;
-  left: 50%;
-  margin: -100px 0 0 -150px;
-  text-align: center;
-}
-
 .checkText {
   margin: 0;
 }
 
-.mailLink {
-  margin-top: 30px;
-  color: #C26458;
-}*/
+.shield {
+  display: inline-block;
+  padding-bottom: 0
+}
 
-.fields {
-  padding-top: 20px;
-  border-top: 1px solid #333;
+.mailbox {
+  font-size: 72px;
+}
+
+.checkMail {
+  text-align: center;
+  max-width: 350px;
+  line-height: 1.2;
+  margin: 60px auto;
+  padding: 40px 40px 30px 40px;
+  background-color: #324853;
+  border-radius: 5px;
+  color: #fff;
+  @media (max-width: 250px) { display: none; }
 }
 
 @define-mixin vertical-align {
@@ -74,14 +34,9 @@
   transform: translateY(-50%) translateX(-50%);
 }
 
-.checkMail {
-  text-align: center;
-  max-width: 350px;
-  margin: 60px auto;
-  padding: 40px 40px 30px 40px;
-  background-color: #324853;
-  border-radius: 5px;
-  @media (max-width: 250px) { display: none; }
+.fields {
+  padding-top: 20px;
+  border-top: 1px solid #333;
 }
 
 .form {
@@ -91,6 +46,7 @@
   padding: 40px 40px 30px 40px;
   background-color: #324853;
   border-radius: 5px;
+  @media (max-width: 480px) { margin: 0px auto; }
   @media (max-width: 250px) { display: none; }
 }
 
@@ -99,9 +55,8 @@
 }
 
 .extension {
-  @mixin vertical-align;
+  max-width: 100px;
+  margin: 20px auto;
   text-align: center;
-  @media (min-width: 250px) {
-    display: none;
-  }
+  @media (min-width: 250px) { display: none; }
 }
