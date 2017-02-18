@@ -82,9 +82,20 @@ const template = (state, html) => {
         <title>Mail Shield</title>
         <meta name="apple-mobile-web-app-title" content="Mail Shield">
         <meta name="apple-mobile-web-app-capable" content="no">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+        <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+        <link rel="manifest" href="/manifest.json">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+        <meta name="theme-color" content="#ffffff">
+      </head>
+      <body>
+        <div id="react-view">${html || ''}</div>
+        ${preloadedState || ''}
         <script>
           window.CONFIG = ${JSON.stringify(CONFIG)}
         </script>
+        <script type="application/javascript" src="/${assets.main.js}"></script>
         <script>
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -110,17 +121,6 @@ const template = (state, html) => {
               \';path=/;expires=\'+new Date(0).toUTCString();i=d.indexOf(\'.\');if(i<0)break;d=d.slice(i+1)}}};
           })(window,document,window['_fs_namespace'],'script','user');
         </script>
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-        <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
-        <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
-        <link rel="manifest" href="/manifest.json">
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-        <meta name="theme-color" content="#ffffff">
-      </head>
-      <body>
-        <div id="react-view">${html || ''}</div>
-        ${preloadedState || ''}
-        <script type="application/javascript" src="/${assets.main.js}"></script>
       </body>
     </html>`
 }
