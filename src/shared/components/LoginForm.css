@@ -48,7 +48,7 @@
   padding: 40px 40px 30px 40px;
   background-color: #324853;
   border-radius: 5px;
-  @media (max-width: 480px) { padding: 0; margin: 0px auto; }
+  @media (max-width: 480px) { padding: 40px 0px; margin: 0px auto; }
   @media (max-width: 250px) { display: none; }
 }
 
