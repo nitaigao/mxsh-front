@@ -38,7 +38,7 @@ class Home extends Component {
 
   render() {
     return (
-      <div id='home' className={styles.home}>
+      <div id='home'>
         {this.homeComponent}
       </div>
     )
