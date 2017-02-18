@@ -7,7 +7,8 @@
 
 .shield {
   display: inline-block;
-  padding-bottom: 0
+  padding-bottom: 0;
+  width: 85%;
 }
 
 .mailbox {
@@ -24,6 +25,7 @@
   border-radius: 5px;
   color: #fff;
   @media (max-width: 250px) { display: none; }
+  @media (max-width: 480px) { padding: 0; }
 }
 
 @define-mixin vertical-align {
@@ -46,12 +48,8 @@
   padding: 40px 40px 30px 40px;
   background-color: #324853;
   border-radius: 5px;
-  @media (max-width: 480px) { margin: 0px auto; }
+  @media (max-width: 480px) { padding: 0; margin: 0px auto; }
   @media (max-width: 250px) { display: none; }
-}
-
-.icon {
-  width: 85%;
 }
 
 .extension {
