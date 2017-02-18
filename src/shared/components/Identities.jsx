@@ -42,16 +42,14 @@ class Identities extends Component {
   render () {
     const { identities: { latest, existing } } = this.props
     return (
-      <div className={styles.identities}>
-        <div className={styles.newIdentity}>
-          <h3>
-            New Identity
+      <div className='container'>
+        <div className='row'>
+          <div className={styles.newIdentity}>
             <button onClick={this.handleNewClick}>Create Identity</button>
-          </h3>
-          {latest && <LatestIdentity value={latest.email} />}
+          </div>
         </div>
         {existing.length > 0 &&
-          <div className={styles.existing}>
+          <div className={classNames('row', styles.existing)}>
             <ul>
               {existing.map((identity, i) => {
                 return (

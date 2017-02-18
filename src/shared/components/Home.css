@@ -1,0 +1,5 @@
+@import "./grid.css";
+
+.home {
+  @mixin container;
+}

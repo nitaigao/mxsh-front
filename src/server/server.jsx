@@ -111,13 +111,15 @@ const template = (state, html) => {
         <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
         <link rel="manifest" href="/manifest.json">
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900|Pacifico" rel="stylesheet"> 
+        <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
         <meta name="theme-color" content="#ffffff">
       </head>
       <body>
         <div id="react-view">${html || ''}</div>
         ${preloadedState || ''}
         <script type="application/javascript" src="/${assets.main.js}"></script>
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+        <link rel="stylesheet" type="text/css" href="/global.css">
         <link rel="stylesheet" type="text/css" href="/${assets.main.css}">
       </body>
     </html>`

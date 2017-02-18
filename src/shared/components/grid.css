@@ -1,0 +1,93 @@
+@define-mixin container {
+  width: 100%;
+  box-sizing: border-box;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+@define-mixin row {
+  margin: 0px -10px;
+  &:before, 
+  &:after {
+    content:"";
+    display: table;
+    clear: both;
+  }
+}
+
+@define-mixin col {
+  float: left; 
+  min-height: 1px; 
+  width: 16.66%; 
+  padding: 10px;
+  display: block;
+  box-sizing: border-box;
+}
+
+@define-mixin col_1 {
+  @mixin col;
+  width: 16.66%;
+  @media all and (max-width: 800px) {
+    width: 33.33%;
+  }
+  @media all and (max-width:650px) {
+    width: 100%;
+  }
+}
+
+@define-mixin col_2 { 
+  @mixin col; 
+  width: 33.33%;
+  @media all and (max-width: 800px) {
+    width: 49%;
+  }
+  @media all and (max-width:650px) {
+    width: 100%;
+  }
+}
+
+@define-mixin col_3 { 
+  @mixin col; 
+  width: 50%;
+  @media all and (max-width: 800px) {
+    width: 83.33%;
+  }
+  @media all and (max-width:650px) {
+    width: 100%;
+  }
+}
+
+@define-mixin col_4 { 
+  @mixin col; 
+  width: 66.66%;
+  @media all and (max-width: 800px) {
+    width: 100%;
+  }
+  @media all and (max-width:650px) {
+    width: 100%;
+  }
+}
+
+@define-mixin col_5 { 
+  @mixin col; 
+  width: 83.33%;
+  @media all and (max-width: 800px) {
+    width: 100%;
+  } 
+  @media all and (max-width:650px) {
+    width: 100%;
+  }
+}
+
+@define-mixin col_6 { 
+  @mixin col; 
+  width: 100%;
+  @media all and (max-width: 800px) {
+    width: 100%;
+  }
+  @media all and (max-width:650px) {
+    width: 100%;
+  }
+}

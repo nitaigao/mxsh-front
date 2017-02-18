@@ -19,7 +19,7 @@ export const reducers = handleActions({
   [CREATE_IDENTITY_SUCCEEDED]: (state, action) => ({
     ...state,
     latest: action.identity,
-    existing: state.existing.concat([action.identity])
+    existing: [action.identity].concat(state.existing)
   })
 }, { latest: null, existing: [] })
 

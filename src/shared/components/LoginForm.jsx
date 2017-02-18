@@ -2,16 +2,18 @@ import React                from 'react'
 import { Field, reduxForm } from 'redux-form'
 import addrs                from 'email-addresses'
 import isEmail              from 'validator/lib/isEmail'
+import styles               from './LoginForm.css'
+import classNames           from 'classnames'
 
 const email = value => 
   value && !isEmail(value) ? 'Invalid email address' : undefined
 
-const required = value => value ? undefined : 'Email is required'
+const required = value => value ? undefined : 'Required'
 
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
-    {touched && ((error && <div>{error}</div>) || (warning && <div>{warning}</div>))}
-    <input {...input} placeholder={label} type={type}/>
+    {touched && ((error && <div className='field-error'>{error}</div>) || (warning && <div>{warning}</div>))}
+    <input className={styles.email} {...input} placeholder={label} type={type}/>
   </div>
 )
 
@@ -30,15 +32,25 @@ class LoginForm extends React.Component {
 
   render() {
     if (this.state.submitted) {
-      return (<p>Check your <a target='_blank' href={`http://${this.state.provider}`}>{this.state.provider}</a> mailbox for a login link.</p>)
+      return (
+        <div className={styles.checkMail}>
+          <i className={classNames('icon', 'ion-archive', styles.icon)}></i>
+          <p className={styles.checkText}>Please check your <a className={styles.mailLink} target='_blank' href={`http://${this.state.provider}`}>{this.state.provider}</a><br/> mailbox for a sign in link</p>
+        </div>
+      )
     } else {
       const { handleSubmit } = this.props
       return (
-        <form onSubmit={handleSubmit(this.onSubmit)}>
-          <p>Your best email, its the last time you will ever need it</p>
-          <Field name='email' label='Email' component={renderField} type='email' validate={[required, email]} />
-          <button type='submit'>Login</button>
-        </form>
+        <div className={styles.loginFormContainer}>
+          <form className={styles.loginForm} onSubmit={handleSubmit(this.onSubmit)}>
+            <img className={styles.brand} src='/icon.svg'></img>
+            <h3>Mail Shield</h3>
+            <div className={styles.card}>
+              <Field name='email' label='Email Address' component={renderField} type='email' validate={[required, email]} />
+              <button className={styles.loginButton} type='submit'>Sign In</button>
+            </div>
+          </form>
+        </div>
       )
     }
   }

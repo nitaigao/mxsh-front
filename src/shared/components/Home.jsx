@@ -5,6 +5,7 @@ import { provideHooks }     from 'redial'
 import { Link }             from 'react-router'
 import LoginForm            from './LoginForm'
 import Identities           from './Identities'
+import styles               from './Home.css'
 
 import { login }            from  '../modules/authentication'
 import { mine }             from  '../modules/identities'
@@ -37,7 +38,7 @@ class Home extends Component {
 
   render() {
     return (
-      <div id='home'>
+      <div id='home' className={styles.home}>
         {this.homeComponent}
       </div>
     )

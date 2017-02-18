@@ -1,0 +1,7 @@
+@define-mixin success {
+  background-color: #26B99A;
+}
+
+@define-mixin primary {
+  background-color: #19A6EC;
+}
