@@ -4,6 +4,7 @@ import addrs                    from 'email-addresses'
 import isEmail                  from 'validator/lib/isEmail'
 import styles                   from './LoginForm.css'
 import classNames               from 'classnames'
+import parseDomain              from 'parse-domain'
 import { FRONTEND_HOST }        from '../configuration'
 
 const email = value => 
@@ -28,7 +29,8 @@ class LoginForm extends React.Component {
     const { onLogin } = this.props
     onLogin(values)
     const email = addrs.parseOneAddress(values.email)
-    this.setState({submitted: true, provider: email.domain})
+    const hostname = parseDomain(email.domain).domain
+    this.setState({submitted: true, provider: hostname})
   }
 
   render() {
