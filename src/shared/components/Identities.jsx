@@ -52,7 +52,7 @@ class Identities extends Component {
     } else {
       return (
         <div className={styles.newForm}>
-          <h2>New Address</h2>
+          <h3 className={styles.title}>New Address</h3>
           <button onClick={this.handleNewClick} className='circle proceed'>
             <i className={classNames('icon', 'ion-plus-round', styles.icon)}></i>
           </button>
