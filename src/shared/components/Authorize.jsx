@@ -3,6 +3,8 @@ import { Link }                from 'react-router'
 import { connect }             from 'react-redux'
 import { provideHooks }        from 'redial'
 
+import styles                  from './Authorize.css'
+
 import { authorize }           from  '../modules/authentication'
 
 const hooks = {
@@ -11,7 +13,7 @@ const hooks = {
 
 const Authorize = () => (
   <div id='authorize'>
-    <p>Logging you in...</p>
+    <p className={styles.message}>Logging you in...</p>
   </div>
 )
 

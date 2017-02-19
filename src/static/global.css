@@ -7,6 +7,7 @@ body {
 
 @media screen and (min-width : 480px) {
   body {
+    color: #333447;
     background-color: #ECF0F1; 
   }
 }
