@@ -52,6 +52,15 @@ input[type="password"] {
   width: 100px;
   margin-left: auto;
   margin-right: auto;
+  font-size: 1.5em;
+}
+
+@media screen and (min-width : 280px) {
+  .circle {
+    border-radius: 100px;
+    height: 150px;
+    width: 150px;
+  }
 }
 
 .success, .proceed {

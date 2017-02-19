@@ -3,15 +3,19 @@
   text-align: center;
   margin: 0px auto;
   margin-top: 20px;
-  max-width: 120px;
+  /*max-width: 120px;*/
   height: 120px;
   @media (min-width: 250px) { 
     position: absolute;
     text-align: center;
     left: 50%;
     top: 50%;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -o-transform: translateX(-50%) translateY(-50%);
     transform: translateX(-50%) translateY(-50%);
-    margin-top: -50px;
+    margin-top: -70px;
     min-width: 120px;
   }
 }
@@ -21,9 +25,9 @@
   text-align: center;
   margin: 0px auto;
   margin-top: 30px;
-  max-width: 120px;
+  /*max-width: 240px;*/
   height: 120px;
-  @media (min-width: 250px) { 
+ /* @media (min-width: 250px) { 
     position: absolute;
     text-align: center;
     left: 50%;
@@ -31,7 +35,7 @@
     transform: translateX(-50%) translateY(-50%);
     margin-top: -50px;
     min-width: 120px;
-  }
+  }*/
 }
 
 .icon {
