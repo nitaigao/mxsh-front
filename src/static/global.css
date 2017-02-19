@@ -42,14 +42,26 @@ input[type="password"] {
   position: relative;
 }
 
+.button, button {
+  border-bottom: solid 3px #1688B5;
+}
+
+.circle {
+  border-radius: 50px;
+  height: 100px;
+  width: 100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .success, .proceed {
   background-color: #27B779;
   border-bottom: solid 3px #239964;
 }
 
-.success:active, .proceed:active {
+.button:active, button:active, .success:active, .proceed:active {
   top: 3px;
-  margin-bottom: 3px;
+  /*margin-bottom: 3px;*/
   border-bottom: none;
 }
 

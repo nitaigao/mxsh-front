@@ -5,7 +5,6 @@ import { provideHooks }     from 'redial'
 import { Link }             from 'react-router'
 import LoginForm            from './LoginForm'
 import Identities           from './Identities'
-import styles               from './Home.css'
 
 import { login }            from  '../modules/authentication'
 import { mine }             from  '../modules/identities'

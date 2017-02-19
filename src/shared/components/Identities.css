@@ -1,42 +1,28 @@
-@import "normalize.css";
-@import "./grid.css";
-
-.newIdentity {
-  @mixin col_1;
-}
-
-.identities {
-  @mixin container;
-}
-
-.existing {
-  @mixin row;
-}
-
-.card {
-  @mixin col_2;
-  color: #333;
-}
-
-.identity {
-  border: 1px solid #eee;
-  background-color: #fff;
-}
-
-.heading {
-  padding: 10px;
+.newEmail {
+  position: relative;
   text-align: center;
-  background-color: #eee;
-}
-
-.body {
-  padding: 30px;
-  text-align: center;
-  font-size: 1.7em;
-}
-
-@media (min-width: 480px) {
-  .existing {
-    display: block;
+  margin: 0px auto;
+  margin-top: 20px;
+  max-width: 120px;
+  height: 120px;
+  @media (min-width: 250px) { 
+    position: absolute;
+    text-align: center;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    margin-top: -50px;
+    min-width: 120px;
   }
+}
+
+.icon {
+  font-size: 3.0em;
+  position: relative;
+  top: 3px;
+}
+
+.somethingElse {
+  display: inline-block;
+  margin-top: 10px;
 }

@@ -4,6 +4,7 @@ import { connect }              from 'react-redux'
 import { first }                from 'lodash/first'
 import styles                   from './Identities.css'
 import classNames               from 'classnames'
+import { FRONTEND_HOST }        from '../configuration'
 
 import CopyToClipboard          from 'react-copy-to-clipboard';
 
@@ -42,28 +43,18 @@ class Identities extends Component {
   render () {
     const { identities: { latest, existing } } = this.props
     return (
-      <div className='container'>
-        <div className='row'>
-          <div className={styles.newIdentity}>
-            <button onClick={this.handleNewClick}>Create Identity</button>
+      <div className='containera'>
+        <div className='rowa'>
+          <div className='col-1a'>
+            <div className={styles.newEmail}>
+              <h3>New Address</h3>
+              <button className='circle proceed'>
+                <i className={classNames('icon', 'ion-plus-round', styles.icon)}></i>
+              </button>
+              <a className={styles.somethingElse} target="_blank" href={FRONTEND_HOST}>something else?</a>
+            </div>
           </div>
         </div>
-        {existing.length > 0 &&
-          <div className={classNames('row', styles.existing)}>
-            <ul>
-              {existing.map((identity, i) => {
-                return (
-                  <li key={i} className={styles.card}>
-                    <div className={styles.identity}>
-                      <div className={styles.heading}>{identity.email}</div>
-                      <div className={styles.body}>{identity.received}</div>
-                    </div>
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
-        }
       </div>
     )
   }
