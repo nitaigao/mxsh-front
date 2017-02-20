@@ -20,5 +20,12 @@ export default function configureStore(history, preloadedState) {
 
   const rootTask = sagaMiddleware.run(sagas)
 
+  if (module.hot) {
+    module.hot.accept('./modules/reducers', () => {
+      const nextRootReducer = require('./modules/reducers'); // eslint-disable-line global-require
+      store.replaceReducer(nextRootReducer);
+    });
+  }
+
   return { store, rootTask }
 }

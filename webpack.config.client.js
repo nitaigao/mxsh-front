@@ -8,22 +8,41 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const PRODUCTION  = process.env.NODE_ENV === 'production'
 const DEVELOPMENT = process.env.NODE_ENV === undefined || process.env.NODE_ENV === 'development'
 
+function flat(input) {
+  return [].concat(...input)
+}
+
+function ifDev(input) {
+  if (DEVELOPMENT) return input
+  return []
+}
+
+function ifProd(input) {
+  if (PRODUCTION) return input
+  return []
+}
+
 const config = {
-  entry:  ['babel-polyfill', './src/client/index.jsx'],
+  entry: flat([
+    'babel-polyfill',
+    ifDev('webpack-hot-middleware/client'),
+    ifDev('react-hot-loader/patch'),
+    './src/client/index.jsx'
+  ]),
   output: {
-    path:     path.join(__dirname, 'dist'),
-    filename: '[name]-[chunkhash].js'
+    path: path.join(__dirname, 'dist'),
+    filename: '[name]-[hash].js'
   },
   module: {
     rules: [
-      { 
+      {
         test: /\.js$/,
         exclude: /node_modules/,
         enforce: 'pre',
-        use: [{loader: 'eslint-loader', options: {rules: {semi: 0}}}]
+        use: [{ loader: 'eslint-loader', options: { rules: { semi: 0 } } }]
       },
       {
-        test:    /\.jsx?$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         loaders: ['babel-loader']
       },
@@ -34,7 +53,7 @@ const config = {
           fallback: 'style-loader',
           use: [
             { loader: 'css-loader', query: { modules: true, sourceMaps: false } },
-            { loader: 'postcss-loader'  }
+            { loader: 'postcss-loader' }
           ]
         })
       }
@@ -45,35 +64,30 @@ const config = {
       '.js', '.jsx', '.json'
     ]
   },
-  plugins: [
+  plugins: flat([
+    ifDev(new webpack.HotModuleReplacementPlugin()),
+    ifDev(new webpack.NoEmitOnErrorsPlugin()),
     new CopyWebpackPlugin([
-      { from: path.join(__dirname, 'src', 'static') }
+      { from: path.join('src', 'static') }
     ]),
     new webpack.DefinePlugin({
-      __DEV__:                JSON.stringify(DEVELOPMENT),
-      __PROD__:               JSON.stringify(PRODUCTION)
+      __DEV__: JSON.stringify(DEVELOPMENT),
+      __PROD__: JSON.stringify(PRODUCTION)
     }),
-    new ExtractTextPlugin('[name]-[chunkhash].css'),
+    new ExtractTextPlugin('[name]-[hash].css'),
     new AssetsPlugin({
       filename: 'assets.json',
-      path: path.resolve(__dirname, './dist')
-    })
-  ]
-}
-
-if (PRODUCTION) {
-  config.plugins.push(
-    new webpack.DefinePlugin({
+      path: path.resolve('dist')
+    }),
+    ifProd(new webpack.DefinePlugin({
       'process.env.NODE_ENV': "'production'"
-    })
-  )
-  config.plugins.push(
-    new webpack.optimize.UglifyJsPlugin({
+    })),
+    ifProd(new webpack.optimize.UglifyJsPlugin({
       compress: {
-          warnings: false
+        warnings: false
       }
-    })
-  )
+    }))
+  ])
 }
 
 module.exports = config

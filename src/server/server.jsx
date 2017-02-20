@@ -27,25 +27,16 @@ import last                      from 'lodash/last'
 
 const app                        = express()
 
-const forceSSL = (req, res, next) => {
-  if(!req.secure) {
-    const secureUrl = "https://" + req.headers['host'] + req.url 
-    res.writeHead(301, { "Location":  secureUrl })
-    res.end()
-  }
-  next()
-}
-
 if (__DEV__) {
-  const watcher = chokidar.watch('./src/shared')
-  watcher.on('ready', () => {
-    watcher.on('all', () => {
-      console.log("Clearing /shared/ module cache from server")
-      Object.keys(require.cache).forEach(function(id) {
-        if (/[\/\\]shared[\/\\]/.test(id)) delete require.cache[id]
-      })
-    })
-  })
+  const webpack       = require('webpack');
+  const webpackConfig = require('../../webpack.config.client');
+  const compiler      = webpack(webpackConfig);
+   
+  app.use(require("webpack-dev-middleware")(compiler, {
+    noInfo: true, publicPath: webpackConfig.output.publicPath
+  }));
+
+  app.use(require("webpack-hot-middleware")(compiler));
 }
 
 if (__PROD__) {
