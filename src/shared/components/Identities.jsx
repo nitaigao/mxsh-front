@@ -1,17 +1,17 @@
-import React, { Component }     from 'react'
-import { Link }                 from 'react-router'
-import { connect }              from 'react-redux'
-import addrs                    from 'email-addresses'
-import { first }                from 'lodash/first'
-import styles                   from './Identities.css'
-import classNames               from 'classnames'
-import { FRONTEND_HOST }        from '../configuration'
+import React, { Component } from 'react'
+import { Link             } from 'react-router'
+import { connect          } from 'react-redux'
+import addrs                from 'email-addresses'
+import { first            } from 'lodash/first'
+import styles               from './Identities.css'
+import classNames           from 'classnames'
+import { FRONTEND_HOST    } from '../configuration'
 
-import CopyToClipboard          from 'react-copy-to-clipboard';
+import CopyToClipboard      from 'react-copy-to-clipboard';
 
-import { identities }           from  '../selectors'
+import { identities       } from  '../selectors'
 
-import { createIdentity } from  '../modules/identities'
+import { createIdentity   } from  '../modules/identities'
 
 const mapStateToProps = (state) => ({
   identities: identities(state)
