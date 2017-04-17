@@ -1,5 +1,5 @@
 import React                              from 'react'
-import { render }                         from 'react-dom'
+import { render       }                   from 'react-dom'
 
 import { AppContainer }                   from 'react-hot-loader'
 import App                                from '../shared/containers/App'
