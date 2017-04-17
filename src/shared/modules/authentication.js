@@ -1,9 +1,12 @@
-import { createAction, handleActions }  from 'redux-actions'
-import { push }                         from 'react-router-redux'
-import { call, put, takeLatest }        from 'redux-saga/effects'
+import { createAction, 
+         handleActions  } from 'redux-actions'
+import { push           } from 'react-router-redux'
+import { call, 
+         put, 
+         takeLatest     } from 'redux-saga/effects'
 
-import { post }                         from './api'
-import { rootPath }                     from './urls'
+import { post           } from './api'
+import { rootPath       } from './urls'
 
 export const LOGIN               = 'AUTHENTICATION/LOGIN'
 export const AUTHORIZE           = 'AUTHENTICATION/AUTHORIZE'
