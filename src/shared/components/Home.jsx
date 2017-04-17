@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import        { connect }   from 'react-redux'
-import { provideHooks }     from 'redial'
+import        { connect   } from 'react-redux'
+import { provideHooks     } from 'redial'
 
-import { Link }             from 'react-router'
+import { Link             } from 'react-router'
 import LoginForm            from './LoginForm'
 import Identities           from './Identities'
 
-import { login }            from  '../modules/authentication'
-import { mine }             from  '../modules/identities'
+import { login            } from  '../modules/authentication'
+import { mine             } from  '../modules/identities'
 
 const mapStateToProps = state => ({
   loggedIn: state.authentication.loggedIn
