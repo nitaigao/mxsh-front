@@ -1,6 +1,12 @@
-import { createAction, handleActions }  from 'redux-actions'
-import { takeLatest, call, put }        from 'redux-saga/effects'
-import { get, post }                    from './api'
+import { createAction, 
+         handleActions } from 'redux-actions'
+
+import { takeLatest, 
+         call, 
+         put           } from 'redux-saga/effects'
+
+import { get,
+         post          } from './api'
 
 export const MINE                       = 'IDENTITIES/MINE'
 export const IDENTITIES_FETCH_SUCCEEDED = 'IDENTITIES/IDENTITIES_FETCH_SUCCEEDED/'
