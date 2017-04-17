@@ -1,16 +1,16 @@
 import React                     from 'react'
-import { Provider }              from 'react-redux'
-import { END }                   from 'redux-saga'
+import { Provider             }  from 'react-redux'
+import { END                  }  from 'redux-saga'
 import { RouterContext, match }  from 'react-router'
-import { renderToString }        from 'react-dom/server'
-import { trigger }               from 'redial'
+import { renderToString       }  from 'react-dom/server'
+import { trigger              }  from 'redial'
 
 import configureStore            from '../shared/configureStore'
 
 import { SENTRY_PUBLIC_DSN,
          SENTRY_PRIVATE_DSN,
          BACKEND_API_HOST,
-         FRONTEND_API_HOST }     from '../shared/configuration'
+         FRONTEND_API_HOST    }  from '../shared/configuration'
 
 import fs                        from 'fs'
 import express                   from 'express'
