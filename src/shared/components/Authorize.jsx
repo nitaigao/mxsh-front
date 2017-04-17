@@ -1,11 +1,11 @@
-import React                   from 'react'
-import { Link }                from 'react-router'
-import { connect }             from 'react-redux'
-import { provideHooks }        from 'redial'
+import React              from 'react'
+import { Link           } from 'react-router'
+import { connect        } from 'react-redux'
+import { provideHooks   } from 'redial'
 
-import styles                  from './Authorize.css'
+import styles             from './Authorize.css'
 
-import { authorize }           from  '../modules/authentication'
+import { authorize      } from  '../modules/authentication'
 
 const hooks = {
   defer: ({ dispatch, params }) => dispatch(authorize(params))
