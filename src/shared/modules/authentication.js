@@ -1,8 +1,8 @@
-import { createAction, 
+import { createAction,
          handleActions  } from 'redux-actions'
 import { push           } from 'react-router-redux'
-import { call, 
-         put, 
+import { call,
+         put,
          takeLatest     } from 'redux-saga/effects'
 
 import { post           } from './api'
