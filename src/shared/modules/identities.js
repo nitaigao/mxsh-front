@@ -1,8 +1,8 @@
-import { createAction, 
+import { createAction,
          handleActions } from 'redux-actions'
 
-import { takeLatest, 
-         call, 
+import { takeLatest,
+         call,
          put           } from 'redux-saga/effects'
 
 import { get,
